@@ -1,0 +1,33 @@
+#
+# Ultraviolet rays
+#
+# Makes the sensor agnostic from its Dark Sky data source in case of eventual
+# replacement.
+#
+# @link https://en.wikipedia.org/wiki/Ultraviolet_index
+#
+- platform: template
+  sensors:
+    uv:
+      friendly_name: UV Index
+      icon_template: mdi:sunglasses
+      value_template: >-
+        {{ states('sensor.dark_sky_uv_index') }}
+    uv_friendly:
+      friendly_name: UV Index
+      icon_template: mdi:sunglasses
+      value_template: >-
+        {% set uv = states('sensor.dark_sky_uv_index') | int(-1) %}
+        {% if uv >= 11 %}
+          Extreme
+        {% elif uv >= 8 %}
+          Very high
+        {% elif uv >= 6 %}
+          High
+        {% elif uv >= 3 %}
+          Moderate
+        {% elif uv >= 0 %}
+          Low
+        {% else %}
+          unknown
+        {% endif %}

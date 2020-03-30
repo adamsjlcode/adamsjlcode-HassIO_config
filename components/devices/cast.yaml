@@ -1,0 +1,4 @@
+media_player:
+  - host: !secret googlehome_ip
+  - host: !secret vizio_ip
+  - host: !secret audiobar_ip

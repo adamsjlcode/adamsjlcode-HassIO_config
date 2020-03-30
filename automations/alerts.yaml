@@ -1,0 +1,200 @@
+## Automation to trigger a UI notification when there is an active weather alert.
+## weatheralerts_1_alert_1 should always contain most recent alert.
+- alias: Weather Alert UI Notification - 1
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: sensor.weatheralerts_1_alert_1_last_changed
+    - platform: homeassistant
+      event: start
+  condition:
+    condition: or
+    conditions:
+      - condition: and
+        conditions:
+          - condition: template
+            value_template: "{{ states('sensor.weatheralerts_1_alerts_are_active') == 'Yes' }}"
+          - condition: template
+            value_template: "{{ (as_timestamp(now()) - as_timestamp(states('sensor.weatheralerts_1_alert_1_last_changed'))) < 30 }}"
+      - condition: and
+        conditions:
+          - condition: template
+            value_template: "{{ states('sensor.weatheralerts_1') == 'unavailable' }}"
+          - condition: template
+            value_template: "{{ states('sensor.weatheralerts_1_alert_1') == 'on' }}"
+          - condition: template
+            value_template: "{{ states('sensor.weatheralerts_1_alert_1_last_changed') | lower != 'unknown' }}"
+          - condition: template
+            value_template: "{{ states('sensor.weatheralerts_1_alert_1_last_changed') | lower != 'none' }}"
+          - condition: template
+            value_template: "{{ (as_timestamp(now()) - as_timestamp(states('sensor.weatheralerts_1_alert_1_last_changed'))) < 30 }}"
+  action:
+    service: script.weatheralerts_1_popup_on_wx_alert
+    data_template:
+      title: >
+        {{ state_attr('sensor.weatheralerts_1_alert_1', 'display_title') }}
+      message: >
+        {{ state_attr('sensor.weatheralerts_1_alert_1', 'display_message') }}
+        {% if (states('sensor.weatheralerts_1_alert_2') == 'on') and ((as_timestamp(now()) - as_timestamp(state_attr('sensor.weatheralerts_1_alert_2', 'alert_effective'))|float) <= 3600) %}
+          <hr>{{ state_attr('sensor.weatheralerts_1_alert_2', 'display_title') }}<br>
+          {{ state_attr('sensor.weatheralerts_1_alert_2', 'display_message') }}
+        {% endif %}
+        {% if (states('sensor.weatheralerts_1_alert_2') == 'on') and ((as_timestamp(now()) - as_timestamp(state_attr('sensor.weatheralerts_1_alert_2', 'alert_effective'))|float) > 3600) %}
+          <hr>Additional alert: <br>{{ state_attr('sensor.weatheralerts_1_alert_2', 'display_title') }}
+        {% endif %}
+        {% if (states('sensor.weatheralerts_1_alert_3') == 'on') and ((as_timestamp(now()) - as_timestamp(state_attr('sensor.weatheralerts_1_alert_3', 'alert_effective'))|float) <= 3600) %}
+          <hr>{{ state_attr('sensor.weatheralerts_1_alert_3', 'display_title') }}<br>
+          {{ state_attr('sensor.weatheralerts_1_alert_3', 'display_message') }}
+        {% endif %}
+        {% if (states('sensor.weatheralerts_1_alert_3') == 'on') and ((as_timestamp(now()) - as_timestamp(state_attr('sensor.weatheralerts_1_alert_3', 'alert_effective'))|float) > 3600) %}
+          <hr>Additional alert: <br>{{ state_attr('sensor.weatheralerts_1_alert_3', 'display_title') }}
+        {% endif %}
+        {% if (states('sensor.weatheralerts_1_alert_4') == 'on') and ((as_timestamp(now()) - as_timestamp(state_attr('sensor.weatheralerts_1_alert_4', 'alert_effective'))|float) <= 3600) %}
+          <hr>{{ state_attr('sensor.weatheralerts_1_alert_4', 'display_title') }}<br>
+          {{ state_attr('sensor.weatheralerts_1_alert_4', 'display_message') }}
+        {% endif %}
+        {% if (states('sensor.weatheralerts_1_alert_4') == 'on') and ((as_timestamp(now()) - as_timestamp(state_attr('sensor.weatheralerts_1_alert_4', 'alert_effective'))|float) > 3600) %}
+          <hr>Additional alert: <br>{{ state_attr('sensor.weatheralerts_1_alert_4', 'display_title') }}
+        {% endif %}
+        {% if (states('sensor.weatheralerts_1_alert_5') == 'on') and ((as_timestamp(now()) - as_timestamp(state_attr('sensor.weatheralerts_1_alert_5', 'alert_effective'))|float) <= 3600) %}
+          <hr>{{ state_attr('sensor.weatheralerts_1_alert_5', 'display_title') }}<br>
+          {{ state_attr('sensor.weatheralerts_1_alert_5', 'display_message') }}
+        {% endif %}
+        {% if (states('sensor.weatheralerts_1_alert_5') == 'on') and ((as_timestamp(now()) - as_timestamp(state_attr('sensor.weatheralerts_1_alert_5', 'alert_effective'))|float) > 3600) %}
+          <hr>Additional alert: <br>{{ state_attr('sensor.weatheralerts_1_alert_5', 'display_title') }}
+        {% endif %}
+#   ## Automation to dismiss UI notification if there are no active alerts for 30 minutes
+#   ## Disable or remove this automation if you don't want notifications to auto-dismiss
+# - alias: Weather Alert UI Notification Auto-dismiss - 1
+#   trigger:
+#     - platform: state
+#       entity_id: sensor.weatheralerts_1_alerts_are_active
+#       to: "No"
+#       for:
+#         minutes: 30
+#     - platform: homeassistant
+#       event: start
+#   condition:
+#     - condition: template
+#       value_template: "{{ states('sensor.weatheralerts_1_alerts_are_active') == 'No' }}"
+#   action:
+#     - service: persistent_notification.dismiss
+#       data:
+#         notification_id: "weatheralerts_1_alert"
+#
+# ## Automation to push alerts via Pushbullet service
+# ## Disable or remove this automation if you don't use Pushbullet
+# - alias: Weather Alerts Pushbullet Notification - 1
+#   trigger:
+#     platform: state
+#     entity_id: sensor.weatheralerts_1_alert_1_last_changed
+#   condition:
+#     condition: or
+#     conditions:
+#       - condition: and
+#         conditions:
+#           - condition: template
+#             value_template: "{{ states('sensor.weatheralerts_1') | int > 0 }}"
+#           - condition: template
+#             value_template: "{{ states('sensor.weatheralerts_1_alert_1_last_changed') | lower != 'unknown' }}"
+#           - condition: template
+#             value_template: "{{ states('sensor.weatheralerts_1_alert_1_last_changed') | lower != 'none' }}"
+#           - condition: template
+#             value_template: "{{ (as_timestamp(now()) - as_timestamp(states('sensor.weatheralerts_1_alert_1_last_changed'))) < 30 }}"
+#       - condition: and
+#         conditions:
+#           - condition: template
+#             value_template: "{{ states('sensor.weatheralerts_1') == 'unavailable' }}"
+#           - condition: template
+#             value_template: "{{ states('sensor.weatheralerts_1_alert_1') == 'on' }}"
+#           - condition: template
+#             value_template: "{{ states('sensor.weatheralerts_1_alert_1_last_changed') | lower != 'unknown' }}"
+#           - condition: template
+#             value_template: "{{ states('sensor.weatheralerts_1_alert_1_last_changed') | lower != 'none' }}"
+#           - condition: template
+#             value_template: "{{ (as_timestamp(now()) - as_timestamp(states('sensor.weatheralerts_1_alert_1_last_changed'))) < 30 }}"
+#   action:
+#     - service: notify.pushbullet_notify
+#       data_template:
+#         message: >
+#           Current NWS Weather Alerts:
+#
+#           {% if states('sensor.weatheralerts_1_alert_1') != "on" %}
+#           No alerts at this time for {{ state_attr('sensor.weatheralerts_1', 'friendly_name') }}.
+#           {% endif %}
+#           {% if states.sensor.weatheralerts_1_alert_1.state == "on" %}
+#           {{ states.sensor.weatheralerts_1_alert_1.attributes.display_title }} for {{ state_attr('sensor.weatheralerts_1', 'friendly_name') }}
+#
+#           {% endif %}
+#           {% if states.sensor.weatheralerts_1_alert_2.state == "on" %}
+#           {{ states.sensor.weatheralerts_1_alert_2.attributes.display_title }} for {{ state_attr('sensor.weatheralerts_1', 'friendly_name') }}
+#
+#           {% endif %}
+#           {% if states.sensor.weatheralerts_1_alert_3state == "on" %}
+#           {{ states.sensor.weatheralerts_1_alert_3.attributes.display_title }} for {{ state_attr('sensor.weatheralerts_1', 'friendly_name') }}
+#
+#           {% endif %}
+#           {% if states.sensor.weatheralerts_1_alert_4.state == "on" %}
+#           {{ states.sensor.weatheralerts_1_alert_4.attributes.display_title }} for {{ state_attr('sensor.weatheralerts_1', 'friendly_name') }}
+#
+#           {% endif %}
+#           {% if states.sensor.weatheralerts_1_alert_5.state == "on" %}
+#           {{ states.sensor.weatheralerts_1_alert_5.attributes.display_title }} for {{ state_attr('sensor.weatheralerts_1', 'friendly_name') }}
+#           {% endif %}
+- alias: NWS Announcement Weather Alert
+  trigger:
+    - platform: state
+      entity_id: sensor.nws_alert_count
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{states.sensor.nws_alert_count.state | int > 0}}'
+        ## Added a time condition because I don't want a non-emergency alert waking me up
+      - condition: or
+        conditions:
+          - condition: time
+            after: '09:00:00'
+            before: '23:00:00'
+          - condition: template
+            value_template: >
+              {{ 'Warning' in states.sensor.nws_alert_event.state }}
+  action:
+    # service: tts.google_translate_say
+    # data_template:
+    #   message: "Attention!. . . Attention!. . . The National Weather Service has issued a
+    #       {{ states.sensor.nws_alert_event.state }} for your area.
+    #       It expires at {{ as_timestamp(state_attr('sensor.nws_alert_event', 'features')[0].properties.expires)| timestamp_custom('%-I:%M %p on %-m-%-d-%Y') }}."
+    #   entity_id:
+    #     - media_player.audio_bar
+    #     - media_player.master_bedroom_speaker
+    - service: media_player.volume_set
+      data:
+       entity_id:
+         - media_player.justin_s_echo_dot
+       volume_level: 0.7
+    - service: media_player.alexa_tts
+      data_template:
+        entity_id:
+          - media_player.justin_s_echo_dot
+        message:
+          "<speak>
+          <audio src='soundbank://soundlibrary/alarms/buzzers/buzzers_04'/>
+          <audio src='soundbank://soundlibrary/alarms/buzzers/buzzers_04'/>
+          Attention!. . . Attention!. . . The National Weather Service has issued a
+          {{ states.sensor.nws_alert_event.state }} for your area.
+          It expires at {{ as_timestamp(state_attr('sensor.nws_alert_event', 'features')[0].properties.expires)| timestamp_custom('%-I:%M %p on %-m-%-d-%Y') }}.
+          </speak>"
+    - delay: '00:00:10'
+    - service: media_player.alexa_tts
+      data_template:
+        entity_id:
+          - media_player.justin_s_echo_dot
+        message:
+          "<speak>
+          <audio src='soundbank://soundlibrary/alarms/buzzers/buzzers_04'/>
+          <audio src='soundbank://soundlibrary/alarms/buzzers/buzzers_04'/>
+          Attention!. . . Attention!. . . The National Weather Service has issued a
+          {{ states.sensor.nws_alert_event.state }} for your area.
+          It expires at {{ as_timestamp(state_attr('sensor.nws_alert_event', 'features')[0].properties.expires)| timestamp_custom('%-I:%M %p on %-m-%-d-%Y') }}.
+          </speak>"

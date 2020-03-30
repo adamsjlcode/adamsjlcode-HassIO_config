@@ -1,0 +1,17 @@
+restart_homeassistant:
+  alias: Restart Home Assistant
+  sequence:
+    - service: homeassistant.restart
+system_reboot:
+  alias: Reboot System
+  sequence:
+    - delay: 00:00:02
+    - service: hassio.host_reboot
+system_git_backup:
+  alias: System Git Backup
+  sequence:
+    - service: logbook.log
+      data_template:
+        name: Shell Command
+        message: Git Backup
+    - service: shell_command.git_backup

@@ -1,0 +1,59 @@
+####################################################
+#                  Galaxy Colors                    #
+####################################################
+# 255, 104, 149
+# 90, 33, 255
+# 116, 81, 255
+# 241, 86, 255
+####################################################
+#                  Scene Galaxy                    #
+####################################################
+
+- alias: Galaxy
+  trigger:
+    - platform: state
+      entity_id: input_boolean.galaxy_scene
+      from: 'off'
+      to: 'on'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.scene_trigger
+
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.default
+
+    - service: light.turn_on
+      entity_id:
+        - light.kitchen_bar_light_1
+        - light.livingroom_fan_bulb_2
+      data:
+       rgb_color: [255, 104, 149]
+       brightness: 48
+
+    - service: light.turn_on
+      entity_id:
+        - light.dining_room_bulb_1
+        - light.livingroom_fan_bulb_1
+      data:
+        rgb_color: [90, 33, 255]
+        brightness: 48
+
+    - service: light.turn_on
+      entity_id:
+        - light.livingroom_light_strip
+        - light.dining_room_bulb_2
+      data:
+        rgb_color: [116, 81, 255]
+        brightness: 48
+
+    - service: light.turn_on
+      entity_id:
+        - light.kitchen_bar_light_2
+        - light.under_cabinet_light_strip
+      data:
+        rgb_color: [241, 86, 255]
+        brightness: 48
+
+    - service: switch.turn_off
+      entity_id:
+        - switch.kitchen_overhead_light

@@ -1,0 +1,19 @@
+## Script creates UI notification and is called via automation defined above
+weatheralerts_1_popup_on_wx_alert:
+  alias: Weather Alert Pop Up - 1
+  sequence:
+      ## Dismiss any current alert so the UI isn't filled
+      ## up with these if there are more then one.
+      ## Only show the most recent alert
+    - service: persistent_notification.dismiss
+      data:
+        notification_id: "weatheralerts_1_alert"
+      ## Create a new persistant notification in the UI for a new alert
+    - service_template: >
+        {% if states.sensor.weatheralerts_1.state != '0' %}
+          persistent_notification.create
+        {% endif %}
+      data_template:
+        notification_id: "weatheralerts_1_alert"
+        message: "{{ message }}"
+        title: "{{ title }}"

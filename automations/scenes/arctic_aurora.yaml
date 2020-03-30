@@ -1,0 +1,76 @@
+####################################################
+#              Arctic Aurora Colors                #
+####################################################
+# rgb_color: 15,168,255
+#
+# rgb_color: 0,56,255
+#
+# rgb_color: 50,0,255
+
+####################################################
+#              Scene Arctic Aurora                 #
+####################################################
+
+- alias: Arctic Aurora
+  trigger:
+    - platform: state
+      entity_id: input_boolean.arctic_aurora_scene
+      from: 'off'
+      to: 'on'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.scene_trigger
+
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.default
+
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.arctic_aurora_scene
+
+    - service: light.turn_on
+      entity_id:
+        - light.kitchen_bar_light_1
+        - light.livingroom_fan_bulb_2
+        - light.dining_room_bulb_2
+      data:
+       rgb_color:
+         - 15
+         - 168
+         - 255
+       brightness: 153
+
+    - service: light.turn_on
+      entity_id:
+        - light.under_cabinet_light_strip
+      data:
+        rgb_color:
+          - 0
+          - 56
+          - 255
+        brightness: 153
+
+    - service: light.turn_on
+      entity_id:
+        - light.kitchen_bar_light_2
+        - light.livingroom_fan_bulb_1
+        - light.dining_room_bulb_1
+      data:
+        rgb_color:
+          - 0
+          - 56
+          - 255
+        brightness: 153
+
+    - service: light.turn_on
+      entity_id:
+        - light.livingroom_light_strip
+      data:
+        rgb_color:
+          - 0
+          - 56
+          - 255
+        brightness: 153
+
+    - service: switch.turn_off
+      entity_id:
+        - switch.kitchen_overhead_light

@@ -1,0 +1,54 @@
+####################################################
+#                   Morning News               #
+####################################################
+- alias: Morning News
+
+  trigger:
+    - platform: state
+      entity_id: input_boolean.scene_trigger
+      from: 'on'
+      to: 'off'
+
+  action:
+    - service: remote.send_command
+      data:
+        entity_id: remote.living_room_harmony
+        device: 66956320
+        command:
+          - PowerOn
+          - Link
+          - DirectionDown
+          - DirectionDown
+          - OK
+        delay_secs: 1
+    - delay: '00:00:15'
+    - service: remote.send_command
+      data:
+        entity_id: remote.living_room_harmony
+        device: 66956320
+        command:
+          - DirectionUp
+          - DirectionUp
+          - DirectionRight
+          - DirectionRight
+          - DirectionRight
+          - DirectionRight
+          - DirectionDown
+          - DirectionDown
+          - DirectionDown
+          - DirectionRight
+          - OK
+          - DirectionUp
+          - DirectionUp
+          - OK
+          - DirectionRight
+          - OK
+          - DirectionRight
+          - DirectionRight
+          - DirectionRight
+          - DirectionRight
+          - OK
+          - OK
+          - OK
+          - OK
+        delay_secs: 1

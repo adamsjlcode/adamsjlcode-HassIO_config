@@ -1,0 +1,4 @@
+git_backup: !secret git_backup
+update: 'curl -o update.sh "https://raw.githubusercontent.com/andrey-git/home-assistant-custom-ui/master/update.sh?raw=true"'
+chmod: 'chmod u+x update.sh'
+run_custom: './update.sh'

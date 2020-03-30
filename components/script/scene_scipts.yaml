@@ -1,0 +1,71 @@
+send_right_scene:
+  alias: send_right_scene
+  sequence:
+    - service_template: >
+        {% if states.input_boolean.home_lights_scene_switch.state == 'on' %}
+          script.send_scene_home
+        {% else %}
+          {% if states.input_boolean.kitchen_lights_scene_switch.state == 'on' %}
+             script.send_scene_kitchen
+          {% endif %}
+          {% if states.input_boolean.abby_lights_scene_witch.state == 'on' %}
+            script.send_scene_abby
+          {% endif %}
+          {% if states.input_boolean.elijah_lights_scene_switch.state == 'on' %}
+            script.send_scene_elijah
+          {% endif %}
+        {% endif %}
+
+turn_off_all_scenes:
+  alias: Turn Off All Scenes
+  sequence:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.arctic_aurora_scene
+        entity_id: input_boolean.soho_scene
+        entity_id: input_boolean.savanna_sunset_scene
+        entity_id: input_boolean.tropical_twilight_scene
+        entity_id: input_boolean.spring_blossom_scene
+        entity_id: input_boolean.palm_beach_scene
+        entity_id: input_boolean.tokyo
+        entity_id: input_boolean.galaxy
+
+send_scene_home:
+  alias: Send Scene Home
+  sequence:
+    service: hue.hue_activate_scene
+    data_template:
+      group_name: Kitchen
+      scene_name: '{{ states.sensor.current_scene.state }}'
+    service: hue.hue_activate_scene
+    data_template:
+      group_name: Abbys Room
+      scene_name: '{{ states.sensor.current_scene.state }}'
+    service: hue.hue_activate_scene
+    data_template:
+      group_name: Elijahs Room
+      scene_name: '{{ states.sensor.current_scene.state }}'
+
+send_scene_kitchen:
+  alias: Send Scene Kitchen
+  sequence:
+    service: hue.hue_activate_scene
+    data_template:
+      group_name: Kitchen
+      scene_name: '{{ states.sensor.current_scene.state }}'
+
+send_scene_abby:
+  alias: Send Scene Abby
+  sequence:
+    service: hue.hue_activate_scene
+    data_template:
+      group_name: Abbys Room
+      scene_name: '{{ states.sensor.current_scene.state }}'
+
+send_scene_elijah:
+  alias: Send Scene Elijah
+  sequence:
+    service: hue.hue_activate_scene
+    data_template:
+      group_name: Elijahs Room
+      scene_name: '{{ states.sensor.current_scene.state }}'

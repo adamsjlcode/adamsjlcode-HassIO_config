@@ -1,0 +1,353 @@
+##########################################################
+##
+##  Master Remote
+##
+##########################################################
+
+##########################################################
+## Lights-On-Master
+##########################################################
+- alias: Lights-On-Master
+
+  trigger:
+    - platform: state
+      entity_id: remote.hue_dimmer_master
+      to: "1_click_up"
+
+  action:
+    - service: light.turn_on
+      entity_id:
+        - light.master_fan_bulb_1
+        - light.master_fan_bulb_2
+      data:
+       color_temp: 447
+       brightness_pct: 100
+##########################################################
+## Lights-On-Master
+##########################################################
+- alias: Lights-Off-Master
+
+  trigger:
+    - platform: state
+      entity_id: remote.hue_dimmer_master
+      to: "4_click_up"
+
+  action:
+    - service: light.turn_off
+      entity_id:
+        - light.master_fan_bulb_1
+        - light.master_fan_bulb_2
+##########################################################
+## Sexy-Time-On
+##########################################################
+- alias: Sexy-Time-On
+
+  trigger:
+    - platform: state
+      entity_id: remote.hue_dimmer_master
+      to: "2_click_up"
+
+  action:
+    - service: light.turn_on
+      entity_id:
+        - light.master_fan_bulb_1
+        - light.master_fan_bulb_2
+      data:
+        brightness: 7
+        rgb_color:
+          - 15
+          - 168
+          - 255
+##########################################################
+## Sexy-Time-Off
+##########################################################
+- alias: Sexy-Time-Off
+
+  trigger:
+    - platform: state
+      entity_id: remote.hue_dimmer_master
+      to: "2_hold_up"
+
+  action:
+    - service: light.turn_on
+      entity_id:
+        - light.master_fan_bulb_1
+        - light.master_fan_bulb_2
+      data:
+       color_temp: 447
+       brightness_pct: 100
+    - delay:
+        seconds: 2
+    - service: light.turn_off
+      entity_id:
+        - light.master_fan_bulb_1
+        - light.master_fan_bulb_2
+##########################################################
+## Lights-On-All
+##########################################################
+- alias: Lights-On-All
+
+  trigger:
+    - platform: state
+      entity_id: remote.hue_dimmer_master
+      to: "3_click_up"
+
+  action:
+    - service: light.turn_on
+      entity_id:
+        - light.abby_bulb_1
+        - light.abby_bulb_2
+        - light.dining_room_bulb_1
+        - light.dining_room_bulb_2
+        - light.elijah_bulb_1
+        - light.elijah_bulb_2
+        - light.kitchen_bar_light_1
+        - light.kitchen_bar_light_2
+        - light.livingroom_fan_bulb_1
+        - light.livingroom_fan_bulb_2
+        - light.livingroom_light_strip
+        - light.master_fan_bulb_1
+        - light.master_fan_bulb_2
+        - light.under_cabinet_light_strip
+      data:
+       color_temp: 447
+       brightness_pct: 100
+    - service: switch.turn_on
+      entity_id:
+        - switch.kitchen_overhead_light
+##########################################################
+## Lights-Off-All
+##########################################################
+- alias: Lights-Off-All
+
+  trigger:
+    - platform: state
+      entity_id: remote.hue_dimmer_master
+      to: "3_hold_up"
+
+  action:
+    - service: light.turn_off
+      entity_id:
+        - light.abby_bulb_1
+        - light.abby_bulb_2
+        - light.dining_room_bulb_1
+        - light.dining_room_bulb_2
+        - light.elijah_bulb_1
+        - light.elijah_bulb_2
+        - light.kitchen_bar_light_1
+        - light.kitchen_bar_light_2
+        - light.livingroom_fan_bulb_1
+        - light.livingroom_fan_bulb_2
+        - light.livingroom_light_strip
+        - light.master_fan_bulb_1
+        - light.master_fan_bulb_2
+        - light.under_cabinet_light_strip
+    - service: switch.turn_off
+      entity_id:
+        - switch.kitchen_overhead_light
+##########################################################
+## Lights-On-Vanity
+##########################################################
+- alias: Lights-On-Vanity
+
+  trigger:
+    - platform: state
+      entity_id: remote.hue_dimmer_master
+      to: "1_hold_up"
+
+  action:
+    - service: switch.turn_on
+      entity_id:
+        - switch.vanity
+##########################################################
+## Lights-On-Vanity
+##########################################################
+- alias: Lights-Off-Vanity
+
+  trigger:
+    - platform: state
+      entity_id: remote.hue_dimmer_master
+      to: "4_hold_up"
+
+  action:
+    - service: switch.turn_off
+      entity_id:
+        - switch.vanity
+
+##########################################################
+##
+##  Kids Rooms Remote
+##
+##########################################################
+
+##########################################################
+## Lights-On-Elijah
+##########################################################
+- alias: Lights-On-Elijah
+
+  trigger:
+    - platform: state
+      entity_id: remote.hue_dimmer_living_room
+      to: "1_click_up"
+
+  action:
+    - service: light.turn_on
+      entity_id:
+        - light.elijah_bulb_1
+        - light.elijah_bulb_2
+      data:
+       color_temp: 447
+       brightness_pct: 100
+##########################################################
+## Lights-On-Abby
+##########################################################
+- alias: Lights-Off-Abby
+
+  trigger:
+    - platform: state
+      entity_id: remote.hue_dimmer_living_room
+      to: "4_click_up"
+
+  action:
+    - service: light.turn_on
+      entity_id:
+        - light.abby_bulb_1
+        - light.abby_bulb_2
+      data:
+       color_temp: 447
+       brightness_pct: 100
+# ##########################################################
+# ## Sexy-Time-On
+# ##########################################################
+# - alias: Sexy-Time-On
+#
+#   trigger:
+#     - platform: state
+#       entity_id: remote.hue_dimmer_master
+#       to: "2_click_up"
+#
+#   action:
+#     - service: light.turn_on
+#       entity_id:
+#         - light.master_fan_bulb_1
+#         - light.master_fan_bulb_2
+#       data:
+#         brightness: 3
+#         rgb_color:
+#           - 15
+#           - 168
+#           - 255
+# ##########################################################
+# ## Sexy-Time-Off
+# ##########################################################
+# - alias: Sexy-Time-Off
+#
+#   trigger:
+#     - platform: state
+#       entity_id: remote.hue_dimmer_master
+#       to: "2_hold_up"
+#
+#   action:
+#     - service: light.turn_on
+#       entity_id:
+#         - light.master_fan_bulb_1
+#         - light.master_fan_bulb_2
+#       data:
+#        color_temp: 447
+#        brightness_pct: 100
+#     - delay:
+#         seconds: 2
+#     - service: light.turn_off
+#       entity_id:
+#         - light.master_fan_bulb_1
+#         - light.master_fan_bulb_2
+# ##########################################################
+# ## Lights-On-All
+# ##########################################################
+# - alias: Lights-On-All
+#
+#   trigger:
+#     - platform: state
+#       entity_id: remote.hue_dimmer_master
+#       to: "3_click_up"
+#
+#   action:
+#     - service: light.turn_on
+#       entity_id:
+#         - light.abby_bulb_1
+#         - light.abby_bulb_2
+#         - light.dining_room_bulb_1
+#         - light.dining_room_bulb_2
+#         - light.elijah_bulb_1
+#         - light.elijah_bulb_2
+#         - light.kitchen_bar_light_1
+#         - light.kitchen_bar_light_2
+#         - light.livingroom_fan_bulb_1
+#         - light.livingroom_fan_bulb_2
+#         - light.livingroom_light_strip
+#         - light.master_fan_bulb_1
+#         - light.master_fan_bulb_2
+#         - light.under_cabinet_light_strip
+#     - service: switch.turn_on
+#       entity_id:
+#         - switch.kitchen_overhead_light
+# ##########################################################
+# ## Lights-Off-All
+# ##########################################################
+# - alias: Lights-Off-All
+#
+#   trigger:
+#     - platform: state
+#       entity_id: remote.hue_dimmer_master
+#       to: "3_hold_up"
+#
+#   action:
+#     - service: light.turn_off
+#       entity_id:
+#         - light.abby_bulb_1
+#         - light.abby_bulb_2
+#         - light.dining_room_bulb_1
+#         - light.dining_room_bulb_2
+#         - light.elijah_bulb_1
+#         - light.elijah_bulb_2
+#         - light.kitchen_bar_light_1
+#         - light.kitchen_bar_light_2
+#         - light.livingroom_fan_bulb_1
+#         - light.livingroom_fan_bulb_2
+#         - light.livingroom_light_strip
+#         - light.master_fan_bulb_1
+#         - light.master_fan_bulb_2
+#         - light.under_cabinet_light_strip
+#     - service: switch.turn_off
+#       entity_id:
+#         - switch.kitchen_overhead_light
+##########################################################
+## Lights-Off-Elijah
+##########################################################
+- alias: Lights-Off-Elijah
+
+  trigger:
+    - platform: state
+      entity_id: remote.hue_dimmer_living_room
+      to: "1_hold_up"
+
+  action:
+    - service: light.turn_off
+      entity_id:
+        - light.elijah_bulb_1
+        - light.elijah_bulb_2
+##########################################################
+## Lights-Off-Abby
+##########################################################
+- alias: Lights-Off-Abby
+
+  trigger:
+    - platform: state
+      entity_id: remote.hue_dimmer_living_room 
+      to: "4_hold_up"
+
+  action:
+    - service: light.turn_off
+      entity_id:
+        - light.abby_bulb_1
+        - light.abby_bulb_2

@@ -1,0 +1,39 @@
+#
+# Lights: Abby
+#
+light.abbys_light:
+  friendly_name: Abby's Light
+#
+# Lights: Elijah
+#
+light.elijahs_light:
+  friendly_name: Elijah's Light
+#
+# Lights: Kitchen
+#
+light.kitchen_bar_light_1:
+  friendly_name: Bar Light One
+light.kitchen_bar_light_2:
+  friendly_name: Bar Light Two
+#
+# Sensors: System
+#
+sensor.processor_use:
+  friendly_name: CPU Load
+  icon: mdi:chip
+  extra_data_template: >-
+    var a = 'sensor.average_load',
+        b = 'sensor.cpu_cores',
+        c = (entities[a] !== undefined && entities[a].state != 'unknown')
+            ? entities[a].state : null,
+        d = (entities[b] !== undefined && entities[b].state != 'unknown')
+            ? '(' + entities[b].state + ' cores)' : null;
+    return c && d ? c + ' ' + d
+    : c || d;
+sensor.disk_use_percent:
+  extra_data_template: >-
+    var e = 'sensor.disk_free_home';
+    return entities[e] !== undefined && entities[e].state != 'unknown'
+    ? Math.round(parseFloat(entities[e].state)) + ' ' +
+      entities[e].attributes['unit_of_measurement'] + ' available'
+    : null;

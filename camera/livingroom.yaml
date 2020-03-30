@@ -1,0 +1,7 @@
+  - platform: mjpeg
+    name: Living Room
+    still_image_url: !secret living_room_cam_still_image_url
+    mjpeg_url: !secret living_room_cam_mjpeg_url
+    username: !secret living_room_cam_username
+    password: !secret living_room_cam_password
+    authentication: basic

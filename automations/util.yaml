@@ -1,0 +1,113 @@
+####################################################
+#                   Scene Toggle Off               #
+####################################################
+- alias: Scene-Toggle-Off
+
+  trigger:
+    - platform: state
+      entity_id: input_boolean.scene_trigger
+      from: 'on'
+      to: 'off'
+
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.default
+    - service: switch.turn_on
+      entity_id:
+        - switch.kitchen_overhead_light
+    - service: light.turn_off
+      entity_id:
+        - light.kitchen_bar_light_1
+        - light.kitchen_bar_light_2
+        - light.livingroom_fan_bulb_1
+        - light.livingroom_fan_bulb_2
+        - light.dining_room_bulb_1
+        - light.dining_room_bulb_2
+        - light.livingroom_light_strip
+        - light.under_cabinet_light_strip
+
+####################################################
+#               Cache Scenes Inputs                #
+####################################################
+- alias: Cache Scenes Inputs
+
+  trigger:
+    - platform: state
+      entity_id: input_boolean.default
+      from: 'off'
+      to: 'on'
+
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.arctic_aurora_scene
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.soho_scene
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.savanna_sunset_scene
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.tropical_twilight_scene
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.spring_blossom_scene
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.palm_beach_scene
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.tokyo
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.galaxy
+
+####################################################
+#                TTS Clear Cache                   #
+####################################################
+- id: TTS-flush-cache
+  alias: Flush TTS Cache
+  initial_state: 'on'
+  hide_entity: True
+  trigger:
+    platform: time
+    at: '2:35:00'
+  action:
+   service: tts.clear_cache
+
+####################################################
+#                                                  #
+#                   Themes                         #
+#                                                  #
+####################################################
+- alias: 'System - Set Custom Theme at Startup'
+  initial_state: 'true'
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    service: frontend.set_theme
+    data:
+      name: Dark-Midnight
+####################################################
+#                   Theme Sunset                   #
+####################################################
+
+- id: themes-sunset
+  alias: Random Darker Theme At Sunset
+  initial_state: true
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+    - service: frontend.set_theme
+      data_template:
+        name: '{{ ["Dark-PmxMononight", "Dark-Solarized", "Dark-Green", "Dark-Cyan", "Dark-Purple, Dark-Midnight"] | random }}'
+
+####################################################
+#                  Theme Sunrise                   #
+####################################################
+
+- id: themes-sunrise
+  alias: Random Lighter Theme At Sunrise
+  initial_state: true
+  trigger:
+    platform: sun
+    event: sunrise
+  action:
+    - service: frontend.set_theme
+      data_template:
+        name: '{{ ["Light-Vintage", "Light-PmxMonolight", "Light-Green", "Light-Cyan"] | random }}'

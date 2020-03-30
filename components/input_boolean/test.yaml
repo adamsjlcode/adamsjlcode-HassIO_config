@@ -1,0 +1,3 @@
+test:
+  name: Test Trigger
+  initial: off

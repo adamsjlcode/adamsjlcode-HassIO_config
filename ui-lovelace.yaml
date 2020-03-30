@@ -1,0 +1,2733 @@
+custom_header:
+  compact_mode: true
+  hide_config: true
+  hide_raw: true
+  hide_help: true
+  shadow: on
+  button_text:
+    options: '{{ hours12 }}:{{ minutesLZ }} {{ AMPM }}'
+background: var(--background-image)
+sidebar-icon-color: 'var(--primary-color)'
+title: Home
+views:
+  - title: Home
+    badges: []
+    icon: mdi:home
+    path: default_view
+    panel: true
+    cards:
+      - type: entities
+        title: Search
+        # Fix Search Bar not inherit color
+        style: |
+         ha-card {
+          padding: 25px;
+          margin: 50px;
+          text-align: center;
+          background-color: var(--material-primary-color)
+          }
+          .name {
+            font-weight: 600;
+            flex: auto;
+            font-size: 4rem;
+            height: 5rem;
+            padding-top: 25px;
+            color: var(--app-header-text-color);
+            text-shadow: 2px 2px 2px var(--dark-color);
+            }
+          ha-card > div > div > search-card{
+            background-color: revert;
+          }
+        entities:
+          - type: custom:search-card
+            max_results: 10
+            matches: '^toggle (.+\..+)'
+            name: 'Toggle {1}'
+            service: homeassistant.toggle
+            service_data:
+              entity_id: {1}
+            style: |
+              ha-card{
+                margin-bottom: 100px;
+              }
+          - type: custom:layout-card
+            layout: vertical
+            column_num: 1
+            max_columns: 2
+            min_width: [50%, 50%]
+            cards:
+              - type: entities
+                title: Lights
+                style: |
+                  ha-card{
+                    background: var(--background-image)
+                  }
+                  .card-header{
+                    background-color: var(--app-header-text-color);
+                    border: 3px var(--primary-color);
+                    border-style: ridge;
+                  }
+                  .name{
+                    color: var(--primary-color);
+                    flex: auto;
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-align: center;
+                    text-shadow: 1px 1px var(--dark-color);
+                  }
+                show_header_toggle: false
+                entities:
+                  - entity: group.abby_fan_lights
+                  - entity: group.all_kitchen_lights
+                  - entity: group.dining_room_lights
+                  - entity: group.elijah_fan_lights
+                  - entity: group.living_room_all_lights
+                  - entity: group.master_bed_fan_lights
+              - break
+              - type: weather-forecast
+                name: Home
+                style: |
+                  ha-card{
+                    background: var(--background-image);
+                  }
+                  .header{
+                      text-align: center;
+                      color: var(--primary-text-color);
+                      font-size: 3rem !important;
+                      font-weight: 600;
+                      text-shadow: 1px 1px var(--dark-color);
+                  }
+                  .name{
+                    color: var(--primary-text-color) !important;
+                    font-size: 2rem !important;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                  }
+                  ha-icon{
+                    color: var(--primary-text-color) !important
+                  }
+                  .attributes{
+                    color: var(--primary-text-color) !important
+                  }
+                  .templow{
+                    color: var(--primary-text-color) !important
+                  }
+                  .precipitation{
+                    color: var(--primary-text-color) !important
+                  }
+                entity: weather.dark_sky
+  - title: Weather
+    badges: []
+    icon: mdi:weather-cloudy
+    panel: true
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        column_num: 1
+        max_columns: 3
+        min_width: [37.5%, 25%, 37.5%]
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: weather-forecast
+                name: Home
+                style: |
+                  ha-card{
+                    background-color: var(--app-header-text-color);
+                  }
+                  .header {
+                    text-align: center;
+                    color: var(--primary-color);
+                    font-size: 3rem !important;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--primary-text-color);
+                  }
+                  .name{
+                    color: var(--primary-color) !important;
+                    font-size: 2rem !important;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--primary-text-color);
+                  }
+                  .temp{
+                    color: var(--dark-color);
+                  }
+                  .temp span{
+                    color: var(--dark-color);
+                  }
+                  ha-icon{
+                    color: var(--primary-color) !important
+                  }
+                  .attributes{
+                    color: var(--primary-color) !important
+                  }
+                  .templow{
+                    color: var(--primary-color) !important
+                  }
+                  .precipitation{
+                    color: var(--primary-color) !important
+                  }
+                entity: weather.dark_sky
+              - type: iframe
+                title: Radar
+                aspect_ratio: 75%
+                style: |
+                  ha-card{
+                    flex: auto;
+                    text-align: center;
+                  }
+                  .card-header{
+                    background-color: var(--app-header-text-color);
+                    border: 3px var(--primary-color);
+                    border-style: ridge;
+                    color: var(--primary-color);
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                    flex: auto;
+                    text-align: center;
+                  }
+                url: >-
+                  https://embed.windy.com/embed2.html?lat=36.023&lon=-82.549&zoom=8&level=surface&overlay=radar&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=36.023&detailLon=-82.549&metricWind=default&metricTemp=default&radarRange=-1
+              # - type: entities
+              #   title: Weather Model
+              #   style: |
+              #     ha-card{
+              #       flex: auto;
+              #       text-align: center;
+              #     }
+              #     ha-card .card-header{
+              #       background-color: var(--app-header-text-color);
+              #       border: 3px var(--primary-color);
+              #       border-style: ridge;
+              #       color: var(--primary-color);
+              #     }
+              #     ha-card .card-header .name{
+              #       font-size: 2rem;
+              #       font-weight: 600;
+              #       text-shadow: 1px 1px var(--dark-color);
+              #       flex: auto;
+              #       text-align: center;
+              #     }
+              #   entities:
+              #     - type: custom:template-entity-row
+              #       image: http://www.wpc.ncep.noaa.gov/basicwx/allfcsts_loop_ter.gif
+              - type: entities
+                title: Weather Radio
+                style: |
+                  ha-card{
+                    flex: auto;
+                    text-align: center;
+                  }
+                  ha-card .card-header{
+                    background-color: var(--app-header-text-color);
+                    border: 3px var(--primary-color);
+                    border-style: ridge;
+                    color: var(--primary-color);
+                  }
+                  ha-card .card-header .name{
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                    flex: auto;
+                    text-align: center;
+                  }
+                entities:
+                  - type: "custom:jukebox-card"
+                    style: |
+                      ha-card{
+                        text-align: center;
+                      }
+                      tab-content{
+                        flex: auto;
+                      }
+                    links:
+                      - url: http://ca.radioboss.fm:8157/stream&t=&r=UFWPS
+                        name: Listen
+                    entities:
+                      - media_player.master_bedroom_speaker
+          - break
+          - type: vertical-stack
+            cards:
+              - type: entities
+                title: Indoor Temps
+                panel: true
+                columns: 3
+                style: |
+                  ha-card{
+                    flex: auto;
+                    text-align: center;
+                  }
+                  .card-header{
+                    background-color: var(--app-header-text-color);
+                    border: 3px var(--primary-color);
+                    border-style: ridge;
+                    color: var(--primary-color);
+                  }
+                  .name{
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                    flex: auto;
+                    text-align: center;
+                  }
+                  #states div:nth-child(1){
+                    margin-bottom: -50px;
+                    margin-right: 15px;
+                  }
+                  #states div:nth-child(3){
+                    margin-bottom: -50px;
+                    margin-right: 15px;
+                  }
+                  #states div:nth-child(5){
+                    margin-bottom: -50px;
+                    margin-right: 15px;
+                  }
+                  #states div:nth-child(7){
+                    margin-bottom: -50px;
+                    margin-right: 15px;
+                  }
+                entities:
+                  - entity: sensor.front_door_temperature_measurement
+                    name: Entryway
+                  - type: 'custom:mini-graph-card'
+                    align_icon: state
+                    animate: true
+                    height: 50
+                    entities:
+                      - sensor.front_door_temperature_measurement
+                    font_size: 80
+                    line_width: 5
+                    show:
+                      icon_adaptive_color: true
+                      name: false
+                      label: false
+                      state: false
+                  - entity: sensor.large_porch_door_temperature_measurement
+                    name: Living Room
+                  - type: 'custom:mini-graph-card'
+                    align_icon: state
+                    animate: true
+                    height: 50
+                    entities:
+                      - sensor.large_porch_door_temperature_measurement
+                    font_size: 80
+                    line_width: 5
+                    show:
+                      icon_adaptive_color: true
+                      name: false
+                      label: false
+                      state: false
+                  - entity: sensor.kitchen_motion_temperature_measurement
+                    name: Kitchen
+                  - type: 'custom:mini-graph-card'
+                    align_icon: state
+                    animate: true
+                    height: 50
+                    entities:
+                      - sensor.kitchen_motion_temperature_measurement
+                    font_size: 80
+                    line_width: 5
+                    show:
+                      icon_adaptive_color: true
+                      name: false
+                      label: false
+                      state: false
+                  - entity: sensor.small_porch_door_temperature_measurement
+                    name: Dining Room
+                  - type: 'custom:mini-graph-card'
+                    align_icon: state
+                    animate: true
+                    height: 50
+                    entities:
+                      - sensor.small_porch_door_temperature_measurement
+                    font_size: 80
+                    line_width: 5
+                    show:
+                      icon_adaptive_color: true
+                      name: false
+                      label: false
+                      state: false
+              - type: entities
+                title: Atmosphere
+                style: |
+                  ha-card{
+                    flex: auto;
+                    text-align: center;
+                  }
+                  .card-header{
+                    background-color: var(--app-header-text-color);
+                    border: 3px var(--primary-color);
+                    border-style: ridge;
+                    color: var(--primary-color);
+                  }
+                  .name{
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                    flex: auto;
+                    text-align: center;
+                  }
+                entities:
+                  - entity: sensor.dark_sky_uv_index
+                  - entity: sensor.dark_sky_uv_index_0d
+                  - entity: sensor.dark_sky_ozone
+                  - entity: sensor.dark_sky_ozone_0d
+              - type: entities
+                title: Outlook
+                style: |
+                  ha-card{
+                    flex: auto;
+                  }
+                  .card-header{
+                    background-color: var(--app-header-text-color);
+                    border: 3px var(--primary-color);
+                    border-style: ridge;
+                    color: var(--primary-color);
+                  }
+                  .name{
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                    flex: auto;
+                    text-align: center;
+                  }
+                  #states div:nth-child(3){
+                    margin-bottom: -50px;
+                    margin-right: 15px;
+                  }
+                  #states div:nth-child(5){
+                    margin-bottom: -50px;
+                    margin-right: 15px;
+                  }
+                entities:
+                  - entity: sensor.dark_sky_summary
+                  - entity: sensor.weather_details
+                  - entity: sensor.outside_humidity
+                  - type: 'custom:mini-graph-card'
+                    align_icon: state
+                    animate: true
+                    height: 50
+                    entities:
+                      - sensor.outside_humidity
+                    font_size: 80
+                    line_width: 5
+                    name: Humidity
+                    show:
+                      icon_adaptive_color: true
+                      name: false
+                      label: false
+                      state: false
+                  - entity: sensor.wind_speed
+                  - type: 'custom:mini-graph-card'
+                    align_icon: state
+                    animate: true
+                    height: 50
+                    entities:
+                      - sensor.wind_speed
+                    font_size: 80
+                    line_width: 5
+                    name: Humidity
+                    show:
+                      icon_adaptive_color: true
+                      name: false
+                      label: false
+                      state: false
+                  - entity: sensor.dark_sky_hourly_summary
+          - break
+          - type: vertical-stack
+            cards:
+              - type: entities
+                title: Hazards
+                style: |
+                  ha-card{
+                    flex: auto;
+                    text-align: center;
+                  }
+                  .card-header{
+                    background-color: var(--app-header-text-color);
+                    border: 3px var(--primary-color);
+                    border-style: ridge;
+                    color: var(--primary-color);
+                  }
+                  .name{
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                    flex: auto;
+                    text-align: center;
+                  }
+                entities:
+                  - entity: sensor.dark_sky_nearest_storm_distance
+                  - entity: sensor.sullivan
+                  - entity: sensor.uv_friendly
+              - type: map
+                title: Earthquakes
+                dark_mode: true
+                geo_location_sources:
+                  - usgs_earthquakes_feed
+                style: |
+                  ha-card{
+                    flex: auto;
+                    text-align: center;
+                  }
+                  .card-header{
+                    background-color: var(--app-header-text-color);
+                    border: 3px var(--primary-color);
+                    border-style: ridge;
+                    color: var(--primary-color);
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                    flex: auto;
+                    text-align: center;
+                  }
+              - type: iframe
+                title: Volcanos
+                aspect_ratio: 100%
+                style: |
+                  ha-card{
+                    flex: auto;
+                    text-align: center;
+                  }
+                  .card-header{
+                    background-color: var(--app-header-text-color);
+                    border: 3px var(--primary-color);
+                    border-style: ridge;
+                    color: var(--primary-color);
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                    flex: auto;
+                    text-align: center;
+                  }
+                url: >-
+                  https://earthquakes.volcanodiscovery.com
+  - title: Media
+    badges: []
+    icon: mdi:play
+    panel: true
+    cards:
+      - type: custom:layout-card
+        column_num: 1
+        max_columns: 4
+        layout: vertical
+        min-width: [25%,25%,25%,25%]
+        cards:
+          - type: custom:vertical-stack-in-card
+            style: |
+              .card-header{
+                background-color: var(--app-header-text-color);
+                border: 3px var(--primary-color);
+                border-style: ridge;
+                color: var(--primary-color);
+                font-size: 2rem;
+                font-weight: 600;
+                text-shadow: 1px 1px var(--dark-color);
+              }
+              .name{
+                flex: auto;
+                text-align: center;
+              }
+            cards:
+              - type: entities
+                title: 'Youtube Latest Videos'
+                style: |
+                  ha-card {
+                    text-align: center;
+                  }
+                  .card-header {
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                    color: var(--app-header-text-color);
+                    background-color: var(--app-header-background-color);
+                  }
+                  #states{
+                    background-color: var(--app-header-background-color);
+                  }
+                  #states div{
+                    background: var(--background-image)
+                  }
+                  .name {
+                      flex: auto;
+                  }
+                  a {
+                    color: var(--app-header-text-color) !important;
+                    text-shadow: 1px 1px var(--dark-color);
+                    text-decoration: none;
+                  }
+                  a:hover {
+                    color: darken(var(--app-header-text-color), 30%) !important;
+                  }
+                  img {
+                    margin-top: 25px
+                  }
+                entities:
+                  - type: custom:html-template-card
+                    ignore_line_breaks: true
+                    content: |
+                      <div class="container">
+                        <div class="row">
+                          <div class="col">
+                            <img src={{ state_attr('sensor.first_we_feast' ,'entity_picture') }} width="60%"/></br>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <h2><a href={{ state_attr('sensor.first_we_feast' ,'url') }}>{{ states('sensor.first_we_feast') }}</a></h2>
+                          </div>
+                        </div>
+                      </div>
+                  - type: custom:html-template-card
+                    ignore_line_breaks: true
+                    content: |
+                      <div class="container">
+                        <div class="row">
+                          <div class="col">
+                            <img src={{ state_attr('sensor.tom_bilyeu' ,'entity_picture') }} width="60%"/></br>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <h2><a href={{ state_attr('sensor.tom_bilyeu' ,'url') }}>{{ states('sensor.tom_bilyeu') }}</a></h2>
+                          </div>
+                        </div>
+                      </div>
+                  - type: custom:html-template-card
+                    ignore_line_breaks: true
+                    content: |
+                      <div class="container">
+                        <div class="row">
+                          <div class="col">
+                            <img src={{ state_attr('sensor.corpse_husband' ,'entity_picture') }} width="60%"/></br>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <h2><a href={{ state_attr('sensor.corpse_husband' ,'url') }}>{{ states('sensor.corpse_husband') }}</a></h2>
+                          </div>
+                        </div>
+                      </div>
+                  - type: custom:html-template-card
+                    ignore_line_breaks: true
+                    content: |
+                      <div class="container">
+                        <div class="row">
+                          <div class="col">
+                            <img src={{ state_attr('sensor.spaceinvader_one' ,'entity_picture') }} width="60%"/></br>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <h2><a href={{ state_attr('sensor.spaceinvader_one' ,'url') }}>{{ states('sensor.first_we_feast') }}</a></h2>
+                          </div>
+                        </div>
+                      </div>
+          - break
+          - type: custom:upcoming-media-card
+            entity: sensor.sonarr_upcoming_media
+            title: Upcoming TV
+            style: |
+              tspan.sona_line0_poster{
+                fill: var(--text-primary-color)
+              }
+          - break
+          - type: custom:upcoming-media-card
+            entity: sensor.radarr_upcoming_media
+            title: Upcoming Movies
+            style: |
+              tspan.rada_line0_poster{
+                fill: var(--text-primary-color)
+              }
+          - break
+          - type: custom:vertical-stack-in-card
+            cards:
+            - type: entities
+              title: Media Players
+              style: |
+                .card-header{
+                  background-color: var(--app-header-text-color);
+                  border: 3px var(--primary-color);
+                  border-style: ridge;
+                  color: var(--primary-color);
+                  font-size: 2rem;
+                  font-weight: 600;
+                  text-shadow: 1px 1px var(--dark-color);
+                }
+                .name{
+                  flex: auto;
+                  text-align: center;
+                }
+              show_header_toggle: false
+              entities:
+              - type: custom:mini-media-player
+                entity: media_player.living_room_display_2
+                icon: mdi:television
+                artwork: cover
+              - type: custom:mini-media-player
+                entity: media_player.audio_bar_2
+                icon: mdi:audio-video
+                artwork: cover
+              - type: custom:mini-media-player
+                entity: media_player.justin_s_echo_dot
+                icon: mdi:amazon-alexa
+                artwork: cover
+              - type: custom:mini-media-player
+                entity: media_player.master_bedroom_speaker
+                icon: mdi:google-assistant
+                artwork: cover
+              - type: custom:mini-media-player
+                entity: media_player.elijah_tv
+                icon: mdi:google-assistant
+                artwork: cover
+              - type: custom:mini-media-player
+                entity: media_player.abby_tv
+                icon: mdi:google-assistant
+                artwork: cover
+            - type: entities
+              title: Plex Status
+              show_header_toggle: false
+              style: |
+                .card-header{
+                  background-color: var(--app-header-text-color);
+                  border: 3px var(--primary-color);
+                  border-style: ridge;
+                  color: var(--primary-color);
+                  font-size: 2rem;
+                  font-weight: 600;
+                  text-shadow: 1px 1px var(--dark-color);
+                }
+                .name{
+                  flex: auto;
+                  text-align: center;
+                }
+              entities:
+                - entity: sensor.plex_lan_bandwidth
+                  icon: mdi:plex
+                - entity: sensor.plex_wan_bandwidth
+                  icon: mdi:plex
+                - entity: sensor.plex_total_bandwidth
+                  icon: mdi:plex
+                - entity: sensor.plex_stream_count_transcode
+                  icon: mdi:plex
+                - entity: sensor.plex_stream_count_direct_stream
+                  icon: mdi:plex
+                - entity: sensor.plex_stream_count_direct_play
+                  icon: mdi:plex
+                - entity: sensor.plex_stream_count
+                  icon: mdi:plex
+                - type: weblink
+                  name: Tuatulli
+                  url: tautulli_address
+                  icon: mdi:tautulli
+  - title: Controls
+    badges: []
+    icon: mdi:track-light
+    panel: true
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        column_num: 1
+        max_columns: 2
+        min_width: [30%, 70%]
+        cards:
+          - type: entities
+            title: Light Controller
+            show_header_toggle: false
+            style: |
+              ha-card{
+                text-align: center;
+              }
+              .card-header{
+                background-color: var(--app-header-text-color);
+                border: 3px var(--primary-color);
+                border-style: ridge;
+                color: var(--primary-color);
+                font-size: 2rem;
+                font-weight: 600;
+                text-shadow: 1px 1px var(--dark-color);
+              }
+              .name{
+                flex: auto;
+                text-align: center;
+              }
+              :host(label){
+                font-weight: 600;
+              }
+            entities:
+              # Abby
+              - type: custom:fold-entity-row
+                head:
+                  type: section
+                  label: Abby
+                entities:
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: light.abby_bulb_1
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: light.abby_bulb_2
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+              # Elijah
+              - type: custom:fold-entity-row
+                head:
+                  type: section
+                  label: Elijah
+                entities:
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: light.elijah_bulb_1
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: light.elijah_bulb_2
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+              # Kitchen
+              - type: custom:fold-entity-row
+                head:
+                  type: section
+                  label: Kitchen
+                entities:
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: group.kitchen_bar_lights
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: light.under_cabinet_light_strip
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+                  - entity: switch.overhead_kitchen
+              # Master
+              - type: custom:fold-entity-row
+                head:
+                  type: section
+                  label: Master
+                entities:
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: light.master_fan_bulb_1
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: light.master_fan_bulb_2
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+              # Dining
+              - type: custom:fold-entity-row
+                head:
+                  type: section
+                  label: Dining
+                entities:
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: light.dining_room_bulb_1
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: light.dining_room_bulb_2
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+              # Living Room
+              - type: custom:fold-entity-row
+                head:
+                  type: section
+                  label: Living
+                entities:
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: light.livingroom_fan_bulb_1
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: light.livingroom_fan_bulb_2
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+                  - type: custom:light-entity-card
+                    style: |
+                      .light-entity-card__title{
+                        color: var(--primary-color);
+                        flex: auto;
+                        font-size: 1.75rem;
+                        font-weight: 600;
+                        text-shadow: 1px 1px var(--primary-text-color);
+                      }
+                    entity: light.livingroom_light_strip
+                    persist_features: true
+                    effects_list:
+                      - random
+                      - colorloop
+              # Entryway
+              - type: custom:fold-entity-row
+                head:
+                  type: section
+                  label: Entryway
+                entities:
+                  - entity: switch.entryway
+          - break
+          - type: entities
+            title: Scene Controller
+            show_header_toggle: false
+            style: |
+              ha-card{
+                text-align: center;
+                background-color: var(--app-header-text-color);
+              }
+              .name {
+                color: var(--primary-color);
+                flex: auto;
+                font-size: 2rem;
+                font-weight: 600;
+                text-shadow: 1px 1px var(--dark-color);;
+              }
+            entities:
+              - type: custom:layout-card
+                max_columns: 2
+                min_height: 300px
+                min_width: [70%, 30%]
+                cards:
+                  - type: custom:vertical-stack-in-card
+                    # inset -4px -4px 12px 0 rgba(77, 77, 77,.5), inset 4px 4px 12px 0 rgba(0,0,0,.7);
+                    style: |
+                      ha-card {
+                        box-shadow: inset -4px -4px 12px 0 rgba(178,178, 178,.8), inset 4px 4px 12px 0 rgba(255,255,255,.6);
+                        border-radius: 30px;
+                        background-color: var(--primary-background-color);
+                        margin: 15px;
+                      }
+                      ha-card > div {
+                        padding: 15px
+                      }
+                    cards:
+                      - type: horizontal-stack
+                        cards:
+                          - type: 'custom:button-card'
+                            entity: input_boolean.arctic_aurora_scene
+                            name: Arctic Aurora
+                            show_entity_picture: true
+                            show_name: false
+                            action: toggle
+                            entity_picture: "/local/images/hue_scenes/arctic_aurora.jpg"
+                            style: |
+                              ha-card {
+                                box-shadow: -5px -5px 5px 0 rgba(77, 77, 77,.5), 5px 5px 5px 0 rgba(0,0,0,.3);
+                                margin-top: 5px;
+                                margin-left: 5px;
+                                margin-buttom: 10px;
+                                max-height: 130px;
+                                max-width: 225px;
+                              }
+                              ha-card.button-card-main{
+                                padding: 0px !important;
+                              }
+                              #icon {
+                                background-repeat: no-repeat;
+                                background-size: contain;
+                                width:100% !important;
+                                height: 130px !important;
+
+                              }
+                            styles:
+                              card:
+                                - border-radius: 50px
+                          - type: 'custom:button-card'
+                            entity: input_boolean.soho_scene
+                            name: Soho
+                            show_entity_picture: true
+                            show_name: false
+                            action: toggle
+                            entity_picture: "/local/images/hue_scenes/soho.jpg"
+                            style: |
+                              ha-card {
+                                box-shadow: -5px -5px 5px 0 rgba(77, 77, 77,.5), 5px 5px 5px 0 rgba(0,0,0,.3);
+                                margin-top: 5px;
+                                margin-left: 5px;
+                                margin-bottom: 10px;
+                                max-height: 130px;
+                                max-width: 225px;
+                              }
+                              ha-card.button-card-main{
+                                padding: 0px !important;
+                              }
+                              #icon {
+                                background-repeat: no-repeat;
+                                background-size: contain;
+                                width:100% !important;
+                                height: 130px !important
+                              }
+                            styles:
+                              card:
+                                - border-radius: 50px
+                          - type: 'custom:button-card'
+                            entity: input_boolean.savanna_sunset_scene
+                            name: Arctic Aurora
+                            show_entity_picture: true
+                            show_name: false
+                            action: toggle
+                            entity_picture: "/local/images/hue_scenes/savanna_sunset.jpg"
+                            style: |
+                              ha-card {
+                                box-shadow: -5px -5px 5px 0 rgba(77, 77, 77,.5), 5px 5px 5px 0 rgba(0,0,0,.3);
+                                margin-top: 5px;
+                                margin-left: 5px;
+                                margin-bottom: 10px;
+                                max-height: 130px;
+                                max-width: 225px;
+                              }
+                              ha-card.button-card-main{
+                                padding: 0px !important;
+                              }
+                              #icon {
+                                background-repeat: no-repeat;
+                                background-size: contain;
+                                width:100% !important;
+                                height: 130px !important
+                              }
+                            styles:
+                              card:
+                                - border-radius: 50px
+                          - type: 'custom:button-card'
+                            entity: input_boolean.tropical_twilight_scene
+                            name: Tropical Twilight
+                            show_entity_picture: true
+                            show_name: false
+                            action: toggle
+                            entity_picture: "/local/images/hue_scenes/tropical_twilight.jpg"
+                            style: |
+                              ha-card {
+                                box-shadow: -5px -5px 5px 0 rgba(77, 77, 77,.5), 5px 5px 5px 0 rgba(0,0,0,.3);
+                                margin-top: 5px;
+                                margin-left: 5px;
+                                margin-bottom: 10px;
+                                max-height: 130px;
+                                max-width: 225px;
+                              }
+                              ha-card.button-card-main{
+                                padding: 0px !important;
+                              }
+                              #icon {
+                                background-repeat: no-repeat;
+                                background-size: contain;
+                                width:100% !important;
+                                height: 130px !important
+                              }
+                            styles:
+                              card:
+                                - border-radius: 50px
+                      - type: horizontal-stack
+                        cards:
+                          - type: 'custom:button-card'
+                            entity: input_boolean.spring_blossom_scene
+                            name: Spring Blossom
+                            show_entity_picture: true
+                            show_name: false
+                            action: toggle
+                            entity_picture: "/local/images/hue_scenes/spring_blossom.jpg"
+                            style: |
+                              ha-card {
+                                box-shadow: -5px -5px 5px 0 rgba(77, 77, 77,.5), 5px 5px 5px 0 rgba(0,0,0,.3);
+                                margin-top: 5px;
+                                margin-left: 5px;
+                                margin-bottom: 10px;
+                                max-height: 130px;
+                                max-width: 225px;
+                              }
+                              ha-card.button-card-main{
+                                padding: 0px !important;
+                              }
+                              #icon {
+                                background-repeat: no-repeat;
+                                background-size: contain;
+                                width:100% !important;
+                                height: 130px !important
+                              }
+                            styles:
+                              card:
+                                - border-radius: 50px
+                          - type: 'custom:button-card'
+                            entity: input_boolean.palm_beach_scene
+                            name: Palm Beach
+                            show_entity_picture: true
+                            show_name: false
+                            action: toggle
+                            entity_picture: "/local/images/hue_scenes/palm_beach.jpg"
+                            style: |
+                              ha-card {
+                                box-shadow: -5px -5px 5px 0 rgba(77, 77, 77,.5), 5px 5px 5px 0 rgba(0,0,0,.3);
+                                margin-top: 5px;
+                                margin-left: 5px;
+                                margin-bottom: 10px;
+                                max-height: 130px;
+                                max-width: 225px;
+                              }
+                              ha-card.button-card-main{
+                                padding: 0px !important;
+                              }
+                              #icon {
+                                background-repeat: no-repeat;
+                                background-size: contain;
+                                width:100% !important;
+                                height: 130px !important
+                              }
+                            styles:
+                              card:
+                                - border-radius: 50px
+                          - type: 'custom:button-card'
+                            entity: input_boolean.tokyo_scene
+                            name: Toyko
+                            show_entity_picture: true
+                            show_name: false
+                            action: toggle
+                            entity_picture: "/local/images/hue_scenes/tokyo.jpg"
+                            style: |
+                              ha-card {
+                                box-shadow: -5px -5px 5px 0 rgba(77, 77, 77,.5), 5px 5px 5px 0 rgba(0,0,0,.3);
+                                margin-top: 5px;
+                                margin-left: 5px;
+                                margin-bottom: 10px;
+                                max-height: 130px;
+                                max-width: 225px;
+                              }
+                              ha-card.button-card-main{
+                                padding: 0px !important;
+                              }
+                              #icon {
+                                background-repeat: no-repeat;
+                                background-size: contain;
+                                width:100% !important;
+                                height: 130px !important
+                              }
+                            styles:
+                              card:
+                                - border-radius: 50px
+                          - type: 'custom:button-card'
+                            entity: input_boolean.galaxy_scene
+                            name: Galaxy
+                            show_entity_picture: true
+                            show_name: false
+                            action: toggle
+                            entity_picture: "/local/images/hue_scenes/galaxy.jpg"
+                            style: |
+                              ha-card {
+                                box-shadow: -5px -5px 5px 0 rgba(77, 77, 77,.5), 5px 5px 5px 0 rgba(0,0,0,.3);
+                                margin-top: 5px;
+                                margin-left: 5px;
+                                margin-bottom: 10px;
+                                max-height: 130px;
+                                max-width: 225px;
+                              }
+                              ha-card.button-card-main{
+                                padding: 0px !important;
+                              }
+                              #icon {
+                                background-repeat: no-repeat;
+                                background-size: contain;
+                                width:100% !important;
+                                height: 130px !important
+                              }
+                            styles:
+                              card:
+                                - border-radius: 50px
+                  - break
+                  - type: entities
+                    # inset -4px -4px 12px 0 rgba(77, 77, 77,.5), inset 4px 4px 12px 0 rgba(0,0,0,.7);
+                    style: |
+                      ha-card{
+                        box-shadow: inset -4px -4px 12px 0 rgba(178,178, 178,.8), inset 4px 4px 12px 0 rgba(255,255,255,.6);
+                        text-align: center;
+                        border-radius: 30px;
+                        background-color: var(--primary-background-color);
+                        margin: 15px;
+                        padding-top: 44px;
+                        padding-bottom: 44px;
+                      }
+                    show_header_toggle: false
+                    entities:
+                      - entity: input_boolean.scene_trigger
+                      - entity: input_boolean.master_lights_scene_switch
+                      - entity: input_boolean.abby_lights_scene_switch
+                      - entity: input_boolean.elijah_lights_scene_switch
+  - title: System
+    badges: []
+    icon: mdi:raspberry-pi
+    panel: true
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        column_num: 1
+        max_columns: 3
+        min_width: [20%, 40%, 40%]
+        cards:
+          - type: custom:vertical-stack-in-card
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - type: 'custom:button-card'
+                    name: Restart HA
+                    entity: script.restart_homeassistant
+                    icon: 'mdi:home-assistant'
+                    tap_action:
+                      action: call-service
+                      service: script.restart_homeassistant
+                    styles:
+                      icon:
+                        - color: var(--app-header-background-color)
+              - type: horizontal-stack
+                cards:
+                  - type: 'custom:button-card'
+                    name: Reboot System
+                    entity: script.confirm_system_reboot
+                    icon: 'mdi:power-cycle'
+                    tap_action:
+                      action: call-service
+                      service: script.confirm_system_reboot
+                    double_tap_action:
+                      action: call-service
+                      service: script.system_reboot
+                    styles:
+                      icon:
+                        - color: var(--app-header-background-color)
+              - type: horizontal-stack
+                cards:
+                  - type: 'custom:button-card'
+                    name: Check Config
+                    entity: script.config_check.run
+                    icon: 'mdi:check-underline-circle'
+                    tap_action:
+                      action: call-service
+                      service: script.config_check.run
+                    styles:
+                      icon:
+                        - color: var(--app-header-background-color)
+              - type: horizontal-stack
+                cards:
+                  - type: 'custom:button-card'
+                    name: Git Backup
+                    entity: script.system_git_backup
+                    icon: 'mdi:github-circle'
+                    tap_action:
+                      action: call-service
+                      service: script.system_git_backup
+                    styles:
+                      icon:
+                        - color: var(--app-header-background-color)
+          - break
+          - type: vertical-stack
+            cards:
+              - type: entities
+                title: Disk Info
+                show_header_toggle: false
+                style: |
+                  .card-header{
+                    background-color: var(--app-header-text-color);
+                    border: 3px var(--primary-color);
+                    border-style: ridge;
+                    color: var(--primary-color);
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                  }
+                  .name{
+                    flex: auto;
+                    text-align: center;
+                  }
+                entities:
+                  - entity: sensor.disk_free_home
+                  - entity: sensor.disk_free_percent
+                  - entity: sensor.disk_use_home
+                  - entity: sensor.disk_use_percent
+          - type: vertical-stack
+            cards:
+              - type: entities
+                title: RAM Info
+                show_header_toggle: false
+                style: |
+                  .card-header{
+                    background-color: var(--app-header-text-color);
+                    border: 3px var(--primary-color);
+                    border-style: ridge;
+                    color: var(--primary-color);
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                  }
+                  .name{
+                    flex: auto;
+                    text-align: center;
+                  }
+                entities:
+                  - entity: sensor.memory_free
+                  - entity: sensor.memory_use
+          - type: entities
+            title: Battery Levels
+            style: |
+              .card-header{
+                background-color: var(--app-header-text-color);
+                border: 3px var(--primary-color);
+                border-style: ridge;
+                color: var(--primary-color);
+                font-size: 2rem;
+                font-weight: 600;
+                text-shadow: 1px 1px var(--dark-color);
+              }
+              .name{
+                flex: auto;
+                text-align: center;
+              }
+            entities:
+              - type: custom:battery-entity
+                entity: sensor.entryway_motion_battery
+              - type: custom:battery-entity
+                entity: sensor.front_door_battery
+              - type: custom:battery-entity
+                entity: sensor.kitchen_motion_battery
+              - type: custom:battery-entity
+                entity: sensor.large_porch_door_battery
+              - type: custom:battery-entity
+                entity: sensor.small_porch_door_battery
+          - break
+          - type: vertical-stack
+            cards:
+              - type: entities
+                title: System
+                show_header_toggle: false
+                style: |
+                  .card-header{
+                    background-color: var(--app-header-text-color);
+                    border: 3px var(--primary-color);
+                    border-style: ridge;
+                    color: var(--primary-color);
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-shadow: 1px 1px var(--dark-color);
+                  }
+                  .name{
+                    flex: auto;
+                    text-align: center;
+                  }
+                  #states div:nth-child(8){
+                    margin-bottom: -50px;
+                    margin-right: 15px;
+                  }
+                entities:
+                  - entity: sensor.current_version
+                  - entity: sensor.update_available
+                  - entity: sensor.uptime_friendly
+                  - entity: sensor.uptime_host
+                  - entity: sensor.last_boot
+                  - entity: sensor.log_size
+                  - entity: sensor.database_size
+                  - entity: sensor.processor_use
+                  - type: custom:mini-graph-card
+                    points_per_hour: 5
+                    line_width: 2.5
+                    hour24: true
+                    hours_to_show: 24
+                    show:
+                      fill: fade
+                      icon: false
+                      name: false
+                      state: false
+                      name_adaptive_color: true
+                      labels: hover
+                      legend: false
+                    style: |
+                      ha-card {
+                        border-radius: 0.35em;
+                        background: none;
+                        box-shadow: none;
+                        margin-top: -3.55em;
+                        margin-left: 0.65em;
+                        height: 10em;
+                      }
+                    tap_action:
+                      action: none
+                    entities:
+                      - entity: sensor.processor_use
+                        color: var(--primary-color)
+  - title: Xbox
+    badges: []
+    icon: fab:xbox
+    panel: true
+    cards:
+      - type: vertical-stack
+        cards:
+          - show_icon: false
+            show_name: false
+            style: |
+              ha-card {
+                --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                box-shadow: 2px 2px rgba(0,0,0,0.0);
+              }
+              styles:
+                card:
+                  - width: 1px
+                  - height: 1px
+            type: 'custom:button-card'
+          - cards:
+              - show_icon: false
+                show_name: false
+                style: |
+                  ha-card {
+                     --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                     box-shadow: 2px 2px rgba(0,0,0,0.0);
+                  }
+                styles:
+                  card:
+                    - width: 50px
+                    - height: 60px
+                type: 'custom:button-card'
+              - entities:
+                  - cards:
+                      - type: 'custom:button-card'
+                        icon: mdi:view-agenda
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                              margin-top: 15px;
+                              box-shadow:
+                                -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 40px
+                            - height: 40px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: var(--primary-text-color)
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: View
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        icon: fab:xbox
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                            box-shadow:
+                              -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                            margin-left: 22px;
+                            margin-right: 22px;
+                          }
+                        styles:
+                          card:
+                            - width: 75px
+                            - height: 75px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: var(--primary-text-color)
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: Xbox
+                            entity_id: remote.living_room_harmony
+                        hold_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: PowerToggle
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        icon: mdi:menu
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                            margin-top: 15px;
+                            box-shadow:
+                                -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 40px
+                            - height: 40px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: var(--primary-text-color)
+                        tap_action:
+                          action: call-service
+
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: Menu
+                            entity_id: remote.living_room_harmony
+                    type: 'custom:hui-horizontal-stack-card'
+                  - cards:
+                      - type: 'custom:button-card'
+                        icon: mdi:rewind
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                          margin-top: 15px;
+                          margin-bottom: 15px;
+                          box-shadow:
+                            -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 40px
+                            - height: 40px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: var(--primary-text-color)
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: Rewind
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        icon: mdi:play-pause
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                            box-shadow:
+                              -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                            margin: 10px;
+                          }
+                        styles:
+                          card:
+                            - width: 100px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: var(--primary-text-color)
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: Play
+                            entity_id: remote.living_room_harmony
+                        hold_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: Pause
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        icon: mdi:fast-forward
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                            margin-top: 15px;
+                            margin-bottom: 15px;
+                            box-shadow:
+                                -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 40px
+                            - height: 40px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: var(--primary-text-color)
+                        tap_action:
+                          action: call-service
+
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: FastForward
+                            entity_id: remote.living_room_harmony
+                    type: 'custom:hui-horizontal-stack-card'
+                  - cards:
+                      - type: 'custom:button-card'
+                        icon: mdi:skip-backward
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                          margin-top: 15px;
+                          margin-bottom: 15px;
+                          box-shadow:
+                            -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 40px
+                            - height: 40px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: var(--primary-text-color)
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: SkipBack
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        icon: mdi:record
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                          margin-top: 15px;
+                          margin-bottom: 15px;
+                          margin-left: 10px;
+                          margin-right: 7px;
+                          box-shadow:
+                            -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 40px
+                            - height: 40px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: red
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: Record
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        icon: mdi:stop
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                          margin-top: 15px;
+                          margin-bottom: 15px;
+                          margin-left: 7px;
+                          margin-right: 10px;
+                          box-shadow:
+                            -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 40px
+                            - height: 40px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: var(--primary-text-color)
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: Stop
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        icon: mdi:skip-forward
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                            margin-top: 15px;
+                            margin-bottom: 15px;
+                            box-shadow:
+                                -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 40px
+                            - height: 40px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: var(--primary-text-color)
+                        tap_action:
+                          action: call-service
+
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: SkipForward
+                            entity_id: remote.living_room_harmony
+                    type: 'custom:hui-horizontal-stack-card'
+                  - show_icon: false
+                    show_name: false
+                    style: |
+                      ha-card {
+                        --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                        box-shadow: 2px 2px rgba(0,0,0,0.0);
+                      }
+                    styles:
+                      card:
+                        - width: 10px
+                        - height: 10px
+                    type: 'custom:button-card'
+                  - cards:
+                      - entities:
+                          - cards:
+                              - show_icon: false
+                                show_name: false
+                                style: |
+                                  ha-card {
+                                    --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                                    box-shadow: 2px 2px rgba(0,0,0,0.0);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 63px
+                                    - height: 10px
+                                type: 'custom:button-card'
+                              - icon: 'mdi:menu-up'
+                                show_icon: true
+                                show_name: false
+                                size: 100%
+                                styles:
+                                  card:
+                                    - box-shadow: none
+                                    - width: 50px
+                                    - height: 50px
+                                    - background-color: var(--primary-background-color)
+                                  icon:
+                                    - color: var(--primary-text-color)
+                                tap_action:
+                                  action: call-service
+
+                                  service: remote.send_command
+                                  service_data:
+                                    device: 66956174
+                                    command: DirectionUp
+                                    entity_id: remote.living_room_harmony
+                                type: 'custom:button-card'
+                            type: 'custom:hui-horizontal-stack-card'
+                          - cards:
+                              - show_icon: false
+                                show_name: false
+                                style: |
+                                  ha-card {
+                                    --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                                    box-shadow: 2px 2px rgba(0,0,0,0.0);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 5px
+                                    - height: 10px
+                                type: 'custom:button-card'
+                              - icon: 'mdi:menu-left'
+                                show_icon: true
+                                show_name: false
+                                size: 100%
+                                styles:
+                                  card:
+                                    - box-shadow: none
+                                    - width: 50px
+                                    - height: 50px
+                                    - background-color: var(--primary-background-color)
+                                  icon:
+                                    - color: var(--primary-text-color)
+                                tap_action:
+                                  action: call-service
+                                  service: remote.send_command
+                                  service_data:
+                                    device: 66956174
+                                    command: DirectionLeft
+                                    entity_id: remote.living_room_harmony
+                                type: 'custom:button-card'
+                              - name: OK
+                                show_icon: false
+                                show_name: true
+                                style: |
+                                  ha-card {
+                                    box-shadow:
+                                        -4px -4px 4px 0 rgba(77, 77, 77,.5),4px 4px 4px 0 rgba(0,0,0,.3);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 50px
+                                    - height: 50px
+                                    - border-radius: 100px
+                                    - background-color: var(--primary-background-color)
+                                  name:
+                                    - font-size: 20px
+                                    - font-weight: bold
+                                    - font-family: Helvetica
+                                    - letter-spacing: '-0.01em'
+                                tap_action:
+                                  action: call-service
+                                  service: remote.send_command
+                                  service_data:
+                                    device: 66956174
+                                    command: OK
+                                    entity_id: remote.living_room_harmony
+                                type: 'custom:button-card'
+                              - icon: 'mdi:menu-right'
+                                show_icon: true
+                                show_name: false
+                                size: 100%
+                                styles:
+                                  card:
+                                    - box-shadow: none
+                                    - width: 50px
+                                    - height: 50px
+                                    - background-color: var(--primary-background-color)
+                                  icon:
+                                    - color: var(--primary-text-color)
+                                tap_action:
+                                  action: call-service
+
+                                  service: remote.send_command
+                                  service_data:
+                                    device: 66956174
+                                    command: DirectionRight
+                                    entity_id: remote.living_room_harmony
+                                type: 'custom:button-card'
+                            type: 'custom:hui-horizontal-stack-card'
+                          - cards:
+                              - show_icon: false
+                                show_name: false
+                                style: |
+                                  ha-card {
+                                    --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                                    box-shadow: 2px 2px rgba(0,0,0,0.0);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 63px
+                                    - height: 10px
+                                type: 'custom:button-card'
+                              - icon: 'mdi:menu-down'
+                                show_icon: true
+                                show_name: false
+                                size: 100%
+                                styles:
+                                  card:
+                                    - box-shadow: none
+                                    - width: 50px
+                                    - height: 50px
+                                    - background-color: var(--primary-background-color)
+                                  icon:
+                                    - color: var(--primary-text-color)
+                                tap_action:
+                                  action: call-service
+                                  service: remote.send_command
+                                  service_data:
+                                    device: 66956174
+                                    command: DirectionDown
+                                    entity_id: remote.living_room_harmony
+                                type: 'custom:button-card'
+                            type: 'custom:hui-horizontal-stack-card'
+                        show_header_toggle: false
+                        style: |
+                          ha-card {
+                            box-shadow:
+                                inset -4px -4px 12px 0 rgba(77, 77, 77,.5), inset 4px 4px 12px 0 rgba(0,0,0,.7);
+                            border-radius: 30px;
+                            background-color: var(--primary-background-color)
+                          }
+                        type: 'custom:hui-entities-card'
+                    type: 'custom:hui-horizontal-stack-card'
+                  - show_icon: false
+                    show_name: false
+                    style: |
+                      ha-card {
+                        --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                        box-shadow: 2px 2px rgba(0,0,0,0.0);
+                      }
+                    styles:
+                      card:
+                        - width: 10px
+                        - height: 10px
+                    type: 'custom:button-card'
+                  - cards:
+                      - entities:
+                          - cards:
+                              - show_icon: false
+                                show_name: false
+                                style: |
+                                  ha-card {
+                                    --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                                    box-shadow: 2px 2px rgba(0,0,0,0.0);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 63px
+                                    - height: 10px
+                                type: 'custom:button-card'
+                              - name: 'Y'
+                                show_icon: false
+                                show_name: true
+                                size: 100%
+                                style: |
+                                  ha-card {
+                                      margin-bottom: -12px;
+                                      box-shadow:
+                                        -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                                      text-shadow: -1px -1px rgba(77, 77, 77)
+                                  }
+                                styles:
+                                  card:
+                                    - width: 50px
+                                    - height: 50px
+                                    - border-radius: 100px
+                                    - background-color: var(--primary-background-color)
+                                  name:
+                                    - color: yellow
+                                    - font-weight: bold
+                                tap_action:
+                                  action: call-service
+                                  service: remote.send_command
+                                  service_data:
+                                    device: 66956174
+                                    command: Y
+                                    entity_id: remote.living_room_harmony
+                                type: 'custom:button-card'
+                            type: 'custom:hui-horizontal-stack-card'
+                          - cards:
+                              - show_icon: false
+                                show_name: false
+                                style: |
+                                  ha-card {
+                                    --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                                    box-shadow: 2px 2px rgba(0,0,0,0.0);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 5px
+                                    - height: 10px
+                                type: 'custom:button-card'
+                              - name: 'X'
+                                show_icon: false
+                                show_name: true
+                                size: 100%
+                                style: |
+                                  ha-card {
+                                  margin-left: -5px;
+                                      box-shadow:
+                                        -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                                        text-shadow: -1px -1px rgba(77, 77, 77);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 50px
+                                    - height: 50px
+                                    - border-radius: 100px
+                                    - background-color: var(--primary-background-color)
+                                  name:
+                                    - color: blue
+                                    - font-weight: bold
+                                tap_action:
+                                  action: call-service
+                                  service: remote.send_command
+                                  service_data:
+                                    device: 66956174
+                                    command: X
+                                    entity_id: remote.living_room_harmony
+                                type: 'custom:button-card'
+                              - show_icon: false
+                                show_name: false
+                                style: |
+                                  ha-card {
+                                    margin-left: -5px;
+                                    --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                                    box-shadow: 2px 2px rgba(0,0,0,0.0);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 50px
+                                    - height: 10px
+                                type: 'custom:button-card'
+                              - name: 'B'
+                                show_icon: false
+                                show_name: true
+                                size: 100%
+                                style: |
+                                  ha-card {
+                                      margin-left: 15px;
+                                      box-shadow:
+                                        -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                                        text-shadow: -1px -1px rgba(77, 77, 77);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 50px
+                                    - height: 50px
+                                    - border-radius: 100px
+                                    - background-color: var(--primary-background-color)
+                                  name:
+                                    - color: red
+                                    - font-weight: bold
+                                tap_action:
+                                  action: call-service
+                                  service: remote.send_command
+                                  service_data:
+                                    device: 66956174
+                                    command: B
+                                    entity_id: remote.living_room_harmony
+                                type: 'custom:button-card'
+                            type: 'custom:hui-horizontal-stack-card'
+                          - cards:
+                              - show_icon: false
+                                show_name: false
+                                style: |
+                                  ha-card {
+                                    --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                                    box-shadow: 2px 2px rgba(0,0,0,0.0);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 63px
+                                    - height: 10px
+                                type: 'custom:button-card'
+                              - name: 'A'
+                                show_icon: false
+                                show_name: true
+                                size: 100%
+                                style: |
+                                  ha-card {
+                                      margin-top: -12px;
+                                      box-shadow:
+                                        -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                                        text-shadow: -1px -1px rgba(77, 77, 77);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 50px
+                                    - height: 50px
+                                    - border-radius: 100px
+                                    - background-color: var(--primary-background-color)
+                                  name:
+                                    - color: green
+                                    - font-weight: bold
+                                tap_action:
+                                  action: call-service
+                                  service: remote.send_command
+                                  service_data:
+                                    device: 66956174
+                                    command: A
+                                    entity_id: remote.living_room_harmony
+                                type: 'custom:button-card'
+                            type: 'custom:hui-horizontal-stack-card'
+                        show_header_toggle: false
+                        style: |
+                          ha-card {
+                            box-shadow:
+                               -4px -4px 12px 0 rgba(77, 77, 77,.5),  4px 4px 12px 0 rgba(0,0,0,.7);
+                            border-radius: 30px;
+                            background-color: var(--primary-background-color)
+                          }
+                        type: 'custom:hui-entities-card'
+                    type: 'custom:hui-horizontal-stack-card'
+                  - show_icon: false
+                    show_name: false
+                    style: |
+                      ha-card {
+                        --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                        box-shadow: 2px 2px rgba(0,0,0,0.0);
+                      }
+                    styles:
+                      card:
+                        - width: 10px
+                        - height: 10px
+                    type: 'custom:button-card'
+                  - cards:
+                      - type: 'custom:button-card'
+                        icon: mdi:keyboard-backspace
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                          margin-top: 15px;
+                          margin-bottom: 15px;
+                          box-shadow:
+                            -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 40px
+                            - height: 40px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: var(--primary-text-color)
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: Back
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        icon: mdi:television-guide
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                            box-shadow:
+                              -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                            margin: 10px;
+                          }
+                        styles:
+                          card:
+                            - width: 100px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: var(--primary-text-color)
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: OneGuide
+                            entity_id: remote.living_room_harmony
+                        hold_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: Pause
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        icon: mdi:volume-mute
+                        show_icon: true
+                        show_name: false
+                        style: |
+                          ha-card {
+                            margin-top: 15px;
+                            margin-bottom: 15px;
+                            box-shadow:
+                                -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 40px
+                            - height: 40px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          icon:
+                            - color: var(--primary-text-color)
+                        tap_action:
+                          action: call-service
+
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: Mute
+                            entity_id: remote.living_room_harmony
+                    type: 'custom:hui-horizontal-stack-card'
+                  - cards:
+                      - entities:
+                          - cards:
+                              - show_icon: false
+                                show_name: false
+                                style: |
+                                  ha-card {
+                                    --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                                    box-shadow: 2px 2px rgba(0,0,0,0.0);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 17px
+                                    - height: 10px
+                                type: 'custom:button-card'
+                              - icon: 'mdi:minus'
+                                show_icon: true
+                                show_name: false
+                                size: 100%
+                                styles:
+                                  card:
+                                    - box-shadow: none
+                                    - width: 30px
+                                    - height: 30px
+                                    - background-color: var(--primary-background-color)
+                                  icon:
+                                    - color: var(--primary-text-color)
+                                tap_action:
+                                  action: call-service
+                                  service: remote.send_command
+                                  service_data:
+                                    device: 66956320
+                                    command: VolumeDown
+                                    entity_id: remote.living_room_harmony
+                                type: 'custom:button-card'
+                              - show_icon: false
+                                show_name: false
+                                style: |
+                                  ha-card {
+                                    --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                                    box-shadow: 2px 2px rgba(0,0,0,0.0);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 10px
+                                    - height: 10px
+                                type: 'custom:button-card'
+                              - name: VOL
+                                show_icon: false
+                                show_name: true
+                                styles:
+                                  card:
+                                    - box-shadow: none
+                                    - width: 30px
+                                    - height: 30px
+                                    - border-radius: 100px
+                                    - background-color: var(--primary-background-color)
+                                  name:
+                                    - font-size: 13px
+                                    - font-weight: bold
+                                    - font-family: Helvetica
+                                    - letter-spacing: '-0.01em'
+                                type: 'custom:button-card'
+                              - show_icon: false
+                                show_name: false
+                                style: |
+                                  ha-card {
+                                    --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                                    box-shadow: 2px 2px rgba(0,0,0,0.0);
+                                  }
+                                styles:
+                                  card:
+                                    - width: 10px
+                                    - height: 10px
+                                type: 'custom:button-card'
+                              - icon: 'mdi:plus'
+                                show_icon: true
+                                show_name: false
+                                size: 100%
+                                styles:
+                                  card:
+                                    - box-shadow: none
+                                    - width: 30px
+                                    - height: 30px
+                                    - background-color: var(--primary-background-color)
+                                  icon:
+                                    - color: var(--primary-text-color)
+                                tap_action:
+                                  action: call-service
+                                  service: remote.send_command
+                                  service_data:
+                                    device: 66956320
+                                    command: VolumeUp
+                                    entity_id: remote.living_room_harmony
+                                type: 'custom:button-card'
+                            type: 'custom:hui-horizontal-stack-card'
+                        show_header_toggle: false
+                        style: |
+                          ha-card {
+                            box-shadow:
+                                -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                            border-radius: 30px;
+                            background-color: var(--primary-background-color)
+                          }
+                        type: 'custom:hui-entities-card'
+                    type: 'custom:hui-horizontal-stack-card'
+                  - show_icon: false
+                    show_name: false
+                    style: |
+                      ha-card {
+                        --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                        box-shadow: 2px 2px rgba(0,0,0,0.0);
+                      }
+                    styles:
+                      card:
+                        - width: 10px
+                        - height: 10px
+                    type: 'custom:button-card'
+                  - cards:
+                      - type: 'custom:button-card'
+                        name: 1
+                        show_icon: false
+                        show_name: true
+                        style: |
+                          ha-card {
+                          margin: 10px;
+                          box-shadow:
+                            -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 50px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          name:
+                            - color: var(--primary-text-color)
+                            - font-weight: bold
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: 1
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        name: 2
+                        show_icon: false
+                        show_name: true
+                        style: |
+                          ha-card {
+                            box-shadow:
+                              -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                            margin: 10px;
+                          }
+                        styles:
+                          card:
+                            - width: 50px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          name:
+                            - color: var(--primary-text-color)
+                            - font-weight: bold
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: 2
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        name: 3
+                        show_icon: false
+                        show_name: true
+                        style: |
+                          ha-card {
+                            margin: 10px;
+                            box-shadow:
+                                -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 50px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          name:
+                            - color: var(--primary-text-color)
+                            - font-weight: bold
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: 3
+                            entity_id: remote.living_room_harmony
+                    type: 'custom:hui-horizontal-stack-card'
+                  - cards:
+                      - type: 'custom:button-card'
+                        name: 4
+                        show_icon: false
+                        show_name: true
+                        style: |
+                          ha-card {
+                          margin: 10px;
+                          box-shadow:
+                            -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 50px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          name:
+                            - color: var(--primary-text-color)
+                            - font-weight: bold
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: 4
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        name: 5
+                        show_icon: false
+                        show_name: true
+                        style: |
+                          ha-card {
+                            box-shadow:
+                              -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                            margin: 10px;
+                          }
+                        styles:
+                          card:
+                            - width: 50px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          name:
+                            - color: var(--primary-text-color)
+                            - font-weight: bold
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: 5
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        name: 6
+                        show_icon: false
+                        show_name: true
+                        style: |
+                          ha-card {
+                            margin: 10px;
+                            box-shadow:
+                                -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 50px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          name:
+                            - color: var(--primary-text-color)
+                            - font-weight: bold
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: 6
+                            entity_id: remote.living_room_harmony
+                    type: 'custom:hui-horizontal-stack-card'
+                  - cards:
+                      - type: 'custom:button-card'
+                        name: 7
+                        show_icon: false
+                        show_name: true
+                        style: |
+                          ha-card {
+                          margin: 10px;
+                          box-shadow:
+                            -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 50px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          name:
+                            - color: var(--primary-text-color)
+                            - font-weight: bold
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: 7
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        name: 8
+                        show_icon: false
+                        show_name: true
+                        style: |
+                          ha-card {
+                            box-shadow:
+                              -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                            margin: 10px;
+                          }
+                        styles:
+                          card:
+                            - width: 50px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          name:
+                            - color: var(--primary-text-color)
+                            - font-weight: bold
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: 8
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        name: 9
+                        show_icon: false
+                        show_name: true
+                        style: |
+                          ha-card {
+                            margin: 10px;
+                            box-shadow:
+                                -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 50px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          name:
+                            - color: var(--primary-text-color)
+                            - font-weight: bold
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: 9
+                            entity_id: remote.living_room_harmony
+                    type: 'custom:hui-horizontal-stack-card'
+                  - cards:
+                      - type: 'custom:button-card'
+                        name: CLR
+                        show_icon: false
+                        show_name: true
+                        style: |
+                          ha-card {
+                          margin: 10px;
+                          box-shadow:
+                            -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 50px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          name:
+                            - color: var(--primary-text-color)
+                            - font-weight: bold
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: Clear
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        name: "0"
+                        show_icon: false
+                        show_name: true
+                        style: |
+                          ha-card {
+                            box-shadow:
+                              -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                            margin: 10px;
+                          }
+                        styles:
+                          card:
+                            - width: 50px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          name:
+                            - color: var(--primary-text-color)
+                            - font-weight: bold
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: 0
+                            entity_id: remote.living_room_harmony
+                      - type: 'custom:button-card'
+                        name: .
+                        show_icon: false
+                        show_name: true
+                        style: |
+                          ha-card {
+                            margin: 10px;
+                            box-shadow:
+                                -5px -5px 5px 0 rgba(77, 77, 77,.5),5px 5px 5px 0 rgba(0,0,0,.3);
+                          }
+                        styles:
+                          card:
+                            - width: 50px
+                            - height: 50px
+                            - border-radius: 100px
+                            - background-color: var(--primary-background-color)
+                          name:
+                            - color: var(--primary-text-color)
+                            - font-weight: bold
+                        tap_action:
+                          action: call-service
+                          service: remote.send_command
+                          service_data:
+                            device: 66956174
+                            command: .
+                            entity_id: remote.living_room_harmony
+                    type: 'custom:hui-horizontal-stack-card'
+                show_header_toggle: false
+                style: |
+                  ha-card {
+                    background-color: var(--primary-background-color);
+                    width: 250px;
+                    box-shadow:
+                        -6px -6px 6px 0 rgba(77, 77, 77,.5),6px 6px 6px 0 rgba(0,0,0,.3);
+                    border-radius: 10px;
+                  }
+                type: entities
+            type: horizontal-stack
+          - show_icon: false
+            show_name: false
+            style: |
+              ha-card {
+                --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+                box-shadow: 2px 2px rgba(0,0,0,0.0);
+              }
+              styles:
+                card:
+                  - width: 5px
+                  - height: 5px
+            type: 'custom:button-card'
+  # - title: States
+  #   badges: []
+  #   icon: mdi:state-machine
+  #   panel: true
+  #   cards:
+  #     - type: custom:layout-card
+  #       layout: vertical
+  #       column_num: 3
+  #       max_columns: 3
+  #       max_width: [33%, 33%, 33%]
+  #       cards:
+  #         - type: entities
+  #           title: 'Youtube Latest Videos'
+  #           entities:
+  #             - type: custom:html-template-card
+  #               ignore_line_breaks: true
+  #               content: |
+  #                 <div class="container">
+  #                   <div class="row">
+  #                     <div class="col">
+  #                       <h2>Sensors</h2>
+  #                       {%- for state in states.sensor -%}
+  #                         {{ state.name }}: {{ state.state }}{{ state.unit_of_measure }}<br>
+  #                       {% endfor %}.
+  #                     </div>
+  #                   </div>
+  #                 </div>

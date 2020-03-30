@@ -1,0 +1,34 @@
+- platform: template
+  sensors:
+    current_scene:
+      friendly_name: Current Scene
+      icon_template: mdi:spray
+      value_template: >-
+        {% if states('input_boolean.default') == 'on' %}
+          Default
+        {% else %}
+          {% if states('input_boolean.arctic_aurora_scene') == 'on' %}
+             Arctic aurora
+          {% endif %}
+          {% if states('input_boolean.soho_scene') == 'on' %}
+             Soho
+          {% endif %}
+          {% if states('input_boolean.savanna_sunset_scene') == 'on' %}
+             Savanna sunset
+          {% endif %}
+          {% if states('input_boolean.tropical_twilight_scene') == 'on' %}
+             Tropical twilight
+          {% endif %}
+          {% if states('input_boolean.spring_blossom_scene') == 'on' %}
+             Spring blossom
+          {% endif %}
+          {% if states('input_boolean.palm_beach_scene') == 'on' %}
+             Palm Beach
+          {% endif %}
+          {% if states('input_boolean.tokyo_scene') == 'on' %}
+             Tokyo
+          {% endif %}
+          {% if states('input_boolean.galaxy_scene') == 'on' %}
+             Galaxy
+          {% endif %}
+        {% endif %}

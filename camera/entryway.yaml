@@ -1,0 +1,16 @@
+# - platform: ffmpeg
+#   still_image_url: !secret entryway_stll_image
+#   input: !secret entryway_stream_source
+#   username: !secret entryway_cam_username
+#   password: !secret entryway_cam_password
+#   authentication: basic
+
+# - platform: reolink_dev
+#   host: !secret entryway_cam_host
+#   username: !secret entryway_cam_username
+#   password: !secret entryway_cam_password
+#   name: Entryway
+#   stream: main
+#   protocol: rtmp
+#   channel: 0
+#   scan_interval: 30s

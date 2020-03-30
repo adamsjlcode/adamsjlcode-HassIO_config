@@ -1,0 +1,56 @@
+- platform: tautulli
+  api_key: !secret tautulli_api_key
+  host: !secret tautulli_host
+  monitored_conditions:
+  - stream_count
+  - stream_count_transcode
+  - stream_count_direct_play
+  - stream_count_direct_stream
+  - lan_bandwidth
+  - wan_bandwidth
+  - total_bandwidth
+  - library_name
+  - full_title
+  - tagline
+  - title
+  - progress_percent
+  - summary
+  - container
+  - indexes
+  - libraries
+  - media_type
+
+#### Plex Users Sensors ####
+- platform: template
+  sensors:
+    plex_stream_count:
+      friendly_name: "Stream Count"
+      value_template: >
+        {{ states.sensor.tautulli.attributes.stream_count }}
+    plex_stream_count_transcode:
+      friendly_name: "Transcode Count"
+      value_template: >
+        {{ states.sensor.tautulli.attributes.stream_count_transcode }}
+    plex_stream_count_direct_play:
+      friendly_name: "Direct Play Count"
+      value_template: >
+        {{ states.sensor.tautulli.attributes.stream_count_direct_play }}
+    plex_stream_count_direct_stream:
+      friendly_name: "Direct Stream Count"
+      value_template: >
+        {{ states.sensor.tautulli.attributes.stream_count_direct_stream }}
+    plex_lan_bandwidth:
+      friendly_name: "Lan Bandwidth"
+      value_template: >
+        {{ (states.sensor.tautulli.attributes.lan_bandwidth|float) / 1024 | round(2) }}
+      unit_of_measurement: Mbps
+    plex_wan_bandwidth:
+      friendly_name: "Wan Bandwidth"
+      value_template: >
+        {{ (states.sensor.tautulli.attributes.wan_bandwidth|float) / 1024 | round(2) }}
+      unit_of_measurement: Mbps
+    plex_total_bandwidth:
+      friendly_name: "Total Bandwidth"
+      value_template: >
+        {{ (states.sensor.tautulli.attributes.total_bandwidth|float) / 1024 | round(2) }}
+      unit_of_measurement: Mbps

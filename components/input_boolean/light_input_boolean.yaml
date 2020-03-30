@@ -1,0 +1,59 @@
+# Scene Condition
+scene_trigger:
+  name: Scene Trigger
+  initial: off
+  icon: mdi:light-switch
+# Scenes
+default:
+  name: Default Lights
+  initial: on
+  icon: mdi:light-switch
+arctic_aurora_scene:
+  name: Arctic Aurora Scene
+  initial: off
+  icon: mdi:lightbulb
+soho_scene:
+  name: Soho Scene
+  initial: off
+  icon: mdi:lightbulb
+savanna_sunset_scene:
+  name: Savanna Sunset Scene
+  initial: off
+  icon: mdi:lightbulb
+tropical_twilight_scene:
+  name: Tropical Twilight Scene
+  initial: off
+  icon: mdi:lightbulb
+spring_blossom_scene:
+  name: Spring Blossom Scene
+  initial: off
+  icon: mdi:lightbulb
+palm_beach_scene:
+  name: Palm Beach Scene
+  initial: off
+  icon: mdi:lightbulb
+tokyo_scene:
+  name: Tokyo Scene
+  initial: off
+  icon: mdi:lightbulb
+galaxy_scene:
+  name: Galaxy Scene
+  initial: off
+  icon: mdi:lightbulb
+# Scene Locations
+home_lights_scene_switch:
+  name: Home Lights
+  initial: off
+  icon: mdi:light-switch
+master_lights_scene_switch:
+  name: Master Bedroom Lights
+  initial: off
+  icon: mdi:light-switch
+abby_lights_scene_switch:
+  name: Abby's Lights
+  initial: off
+  icon: mdi:light-switch
+elijah_lights_scene_switch:
+  name: Elijah's Lights
+  initial: off
+  icon: mdi:light-switch

@@ -1,0 +1,307 @@
+#################################################################
+## Lighting Automations
+#################################################################
+
+##########################################################
+## Lights-On-Entryway-Motion
+##########################################################
+- alias: Lights-On-Entryway-Motion
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.entryway_motion_motion
+      from: 'off'
+      to: 'on'
+
+  condition:
+    condition: state
+    entity_id: input_boolean.default
+    state: 'on'
+
+  action:
+    - service: switch.turn_on
+      entity_id:
+        - switch.entryway
+
+##########################################################
+## Lights-Off-Entryway-After-Motion
+##########################################################
+- alias: Lights-Off-Entryway-After-Motion
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.entryway_motion_motion
+      from: 'on'
+      to: 'off'
+      for:
+        hours: 0
+        minutes: 1
+        seconds: 0
+
+  condition:
+    condition: state
+    entity_id: input_boolean.default
+    state: 'on'
+
+  action:
+    - service: switch.turn_off
+      entity_id:
+        - switch.entryway
+
+##########################################################
+## Lights-On-Kitchen/Living-Motion-Daytime
+##########################################################
+- alias: Lights-On-Kitchen/Living-Motion-Daytime
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_motion_motion
+      from: 'off'
+      to: 'on'
+
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.default
+        state: 'on'
+      - condition: state
+        entity_id: sun.sun
+        state: 'above_horizon'
+
+  action:
+    - service: light.turn_on
+      entity_id:
+        - light.kitchen_bar_light_1
+        - light.kitchen_bar_light_2
+        - light.livingroom_fan_bulb_1
+        - light.livingroom_fan_bulb_2
+        - light.livingroom_light_strip
+      data:
+       color_temp: 447
+       brightness_pct: 100
+
+##########################################################
+## Lights-On-Kitchen/Living-Motion-Night-Pre-10
+##########################################################
+- alias: Lights-On-Kitchen/Living-Motion-Night-Pre-10
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_motion_motion
+      from: 'off'
+      to: 'on'
+
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.default
+        state: 'on'
+      - condition: time
+        after: '17:30:00'
+        before: '22:00:00'
+
+  action:
+    - service: light.turn_on
+      entity_id:
+        - light.kitchen_bar_light_1
+        - light.kitchen_bar_light_2
+        - light.livingroom_fan_bulb_1
+        - light.livingroom_fan_bulb_2
+        - light.livingroom_light_strip
+      data:
+       color_temp: 447
+       brightness_pct: 100
+    - service: switch.turn_on
+      entity_id:
+        - switch.kitchen_overhead_light
+
+##########################################################
+## Lights-On-Kitchen/Living-Motion-Night-After-10-12
+##########################################################
+- alias: Lights-On-Kitchen/Living-Motion-Night-After-10-12
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_motion_motion
+      from: 'off'
+      to: 'on'
+
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.default
+        state: 'on'
+      - condition: time
+        after: '22:00:00'
+        before: '23:59:59'
+
+  action:
+    - service: light.turn_on
+      entity_id:
+        - light.kitchen_bar_light_1
+        - light.kitchen_bar_light_2
+        - light.livingroom_fan_bulb_1
+        - light.livingroom_fan_bulb_2
+      data:
+        brightness: 3
+        rgb_color:
+          - 255
+          - 154
+          - 25
+    - service: light.turn_on
+      entity_id:
+        - light.livingroom_light_strip
+      data:
+        brightness: 122
+        rgb_color:
+          - 255
+          - 169
+          - 2
+
+##########################################################
+## Lights-On-Kitchen/Living-Motion-Night-After-12-03
+##########################################################
+- alias: Lights-On-Kitchen/Living-Motion-Night-After-12-03
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_motion_motion
+      from: 'off'
+      to: 'on'
+
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.default
+        state: 'on'
+      - condition: time
+        after: '00:00:00'
+        before: '04:30:00'
+
+  action:
+    - service: light.turn_on
+      entity_id:
+        - light.kitchen_bar_light_1
+        - light.kitchen_bar_light_2
+        - light.livingroom_fan_bulb_1
+        - light.livingroom_fan_bulb_2
+      data:
+        brightness: 3
+        rgb_color:
+          - 255
+          - 154
+          - 2
+    - service: light.turn_on
+      entity_id:
+        - light.livingroom_light_strip
+      data:
+        brightness: 122
+        rgb_color:
+          - 255
+          - 169
+          - 2
+
+##########################################################
+## Lights-On-Kitchen/Living-Motion-Night-After-3
+##########################################################
+- alias: Lights-On-Kitchen/Living-Motion-Night-After-3
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_motion_motion
+      from: 'off'
+      to: 'on'
+
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.default
+        state: 'on'
+      - condition: time
+        after: '17:30:00'
+        before: '22:00:00'
+
+  action:
+    - service: light.turn_on
+      entity_id:
+        - light.kitchen_bar_light_1
+        - light.kitchen_bar_light_2
+        - light.livingroom_fan_bulb_1
+        - light.livingroom_fan_bulb_2
+        - light.livingroom_light_strip
+      data:
+       color_temp: 447
+       brightness_pct: 100
+    - service: switch.turn_on
+      entity_id:
+        - switch.kitchen_overhead_light
+
+##########################################################
+## Lights-Off-Kitchen/Living-After-Motion
+##########################################################
+- alias: Lights-Off-Kitchen/Living-After-Motion
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_motion_motion
+      from: 'on'
+      to: 'off'
+      for:
+        hours: 0
+        minutes: 30
+        seconds: 0
+
+  condition:
+    condition: state
+    entity_id: input_boolean.default
+    state: 'on'
+
+  action:
+    - service: light.turn_off
+      entity_id:
+        - light.kitchen_bar_light_1
+        - light.kitchen_bar_light_2
+        - light.livingroom_fan_bulb_1
+        - light.livingroom_fan_bulb_2
+    - service: switch.turn_off
+      entity_id:
+        - switch.kitchen_overhead_light
+
+##########################################################
+## Lights-Off-Kitchen/Living-After-Motion-Midnight
+##########################################################
+- alias: Lights-Off-Kitchen/Living-After-Motion-Midnight
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_motion_motion
+      from: 'on'
+      to: 'off'
+      for:
+        hours: 0
+        minutes: 10
+        seconds: 0
+
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.default
+        state: 'on'
+      - condition: time
+        after: '23:59:59'
+        before: '03:00:00'
+
+  action:
+    - service: light.turn_off
+      entity_id:
+        - light.kitchen_bar_light_1
+        - light.kitchen_bar_light_2
+        - light.livingroom_fan_bulb_1
+        - light.livingroom_fan_bulb_2
+        - light.livingroom_light_strip

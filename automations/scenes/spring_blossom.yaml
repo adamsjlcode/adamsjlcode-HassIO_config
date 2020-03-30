@@ -1,0 +1,59 @@
+####################################################
+#            Spring Blossom Colors              #
+####################################################
+# 214, 204, 255
+# 255, 56, 151
+# 208, 201, 255
+# 255, 153, 238
+####################################################
+#             Scene Spring Blossom                 #
+####################################################
+
+- alias: Spring Blossom
+  trigger:
+    - platform: state
+      entity_id: input_boolean.spring_blossom_scene
+      from: 'off'
+      to: 'on'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.scene_trigger
+
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.default
+
+    - service: light.turn_on
+      entity_id:
+        - light.kitchen_bar_light_1
+        - light.livingroom_fan_bulb_2
+      data:
+       rgb_color: [214, 204, 255]
+       brightness: 183
+
+    - service: light.turn_on
+      entity_id:
+        - light.kitchen_bar_light_2
+        - light.livingroom_fan_bulb_1
+      data:
+        rgb_color: [255, 56, 151]
+        brightness: 214
+
+    - service: light.turn_on
+      entity_id:
+        - light.livingroom_light_strip
+        - light.dining_room_bulb_2
+      data:
+        rgb_color: [208, 201, 255]
+        brightness: 214
+
+    - service: light.turn_on
+      entity_id:
+        - light.dining_room_bulb_1
+        - light.under_cabinet_light_strip
+      data:
+        rgb_color: [255, 153, 238]
+        brightness: 214
+
+    - service: switch.turn_off
+      entity_id:
+        - switch.kitchen_overhead_light

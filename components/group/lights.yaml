@@ -1,0 +1,79 @@
+all_lights:
+  name: "All Lights"
+  icon: mdi:lightbulb
+  entities:
+    - light.abby_bulb_1
+    - light.abby_bulb_2
+    - light.dining_room_bulb_1
+    - light.dining_room_bulb_2
+    - light.elijah_bulb_1
+    - light.elijah_bulb_2
+    - light.kitchen_bar_light_1
+    - light.kitchen_bar_light_2
+    - light.livingroom_fan_bulb_1
+    - light.livingroom_fan_bulb_2
+    - light.livingroom_light_strip
+    - light.master_fan_bulb_1
+    - light.master_fan_bulb_2
+    - light.under_cabinet_light_strip
+    - switch.kitchen_overhead_light
+    - switch.entry_light
+
+all_kitchen_lights:
+  name: "Kitchen Lights"
+  icon: mdi:lightbulb
+  entities:
+    - light.kitchen_bar_light_1
+    - light.kitchen_bar_light_2
+    - switch.kitchen_overhead_light
+    - light.under_cabinet_light_strip
+
+kitchen_bar_lights:
+  name: "Bar Lights"
+  icon: mdi:lightbulb
+  entities:
+    - light.kitchen_bar_light_1
+    - light.kitchen_bar_light_2
+
+master_bed_fan_lights:
+  name: "Master Bedroom Lights"
+  icon: mdi:lightbulb
+  entities:
+    - light.master_fan_bulb_1
+    - light.master_fan_bulb_2
+
+abby_fan_lights:
+  name: "Abby Bedroom Lights"
+  icon: mdi:lightbulb
+  entities:
+    - light.abby_bulb_1
+    - light.abby_bulb_2
+
+elijah_fan_lights:
+  name: "Elijah Bedroom Lights"
+  icon: mdi:lightbulb
+  entities:
+    - light.elijah_bulb_1
+    - light.elijah_bulb_2
+
+dining_room_lights:
+  name: "Dining Room Lights"
+  icon: mdi:lightbulb
+  entities:
+    - light.dining_room_bulb_1
+    - light.dining_room_bulb_2
+
+living_room_fan_lights:
+  name: "Living Room Fan Lights"
+  icon: mdi:lightbulb
+  entities:
+    - light.livingroom_fan_bulb_1
+    - light.livingroom_fan_bulb_2
+
+living_room_all_lights:
+  name: "Living Room All Lights"
+  icon: mdi:lightbulb
+  entities:
+    - light.livingroom_fan_bulb_1
+    - light.livingroom_fan_bulb_2
+    - light.livingroom_light_strip

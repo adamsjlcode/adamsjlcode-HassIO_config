@@ -1,0 +1,7 @@
+  - platform: mjpeg
+    name: Kitchen
+    still_image_url: !secret kitchen_cam_still_image_url
+    mjpeg_url: !secret kitchen_cam_mjpeg_url
+    username: !secret kitchen_cam_username
+    password: !secret kitchen_cam_password
+    authentication: basic
