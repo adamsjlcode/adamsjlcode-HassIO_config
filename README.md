@@ -4,6 +4,7 @@ Hassio config
 Currently Working On
 ====================
 
+-	[x] Themes/Theme-Backgrounds
 -	[ ] Entryway Camera Not Showing
 -	[ ] Scene Toggling/Reset Trigger
 -	[ ] Sending Scene to different rooms
@@ -12,28 +13,30 @@ Currently Working On
 Features
 ========
 
-| Card                                    | View Used In  | Link                                                    |
-|-----------------------------------------|---------------|---------------------------------------------------------|
-| Battery Entity Card                     | System View   | https://github.com/cbulock/lovelace-battery-entity      |
-| card-mod                                | Throughout    | https://github.com/thomasloven/lovelace-card-mod        |
-| card-tools version 0.4                  | System View   | https://github.com/thomasloven/lovelace-card-tools      |
-| Config Check                            | System        | https://github.com/custom-components/config_check       |
-| Custom Header                           | Throughout    | https://github.com/maykar/custom-header                 |
-| Custom Button                           | Throughout    | https://github.com/custom-cards/button-card             |
-| fold-entity-row                         | Lighting View | https://github.com/thomasloven/lovelace-fold-entity-row |
-| HACS (Home Assistant Community Store)   | System        | https://github.com/hacs/integration                     |
-| hass-favicon                            | Throughout    | https://github.com/thomasloven/hass-favicon             |
-| Hue sensor advanced                     | Lighting      | https://github.com/robmarkcole/Hue-sensors-HASS         |
-| layout-card                             | System View   | https://github.com/thomasloven/lovelace-layout-card     |
-| Light Entity Card                       | Lighting View | https://github.com/ljmerza/light-entity-card            |
-| Media Player Jukebox for Home-Assistant | Weather/Media | https://github.com/lukx/home-assistant-jukebox          |
-| Mini Graph card                         | System View   | https://github.com/kalkih/mini-graph-card               |
-| Mini Media Player                       | Media View    | https://github.com/kalkih/mini-media-player             |
-| Search Card                             | Home View     | https://github.com/postlund/search-card                 |
-| Upcoming Media                          | Media View    | https://github.com/custom-cards/upcoming-media-card     |
-| Vertical Stack In Card                  | Throughout    | https://github.com/custom-cards/vertical-stack-in-card  |
-| Weatheralerts                           | Weather/Popup | https://github.com/custom-components/weatheralerts      |
-| Youtube Sensor                          | Media View    | https://github.com/custom-components/youtube            |
+| Card                                    | View Used In  | Link                                                                                |
+|-----------------------------------------|---------------|-------------------------------------------------------------------------------------|
+| Battery Entity Card                     | System View   | https://github.com/cbulock/lovelace-battery-entity                                  |
+| button-card                             | Throughout    | https://github.com/custom-cards/button-card                                         |
+| card-mod                                | Throughout    | https://github.com/thomasloven/lovelace-card-mod                                    |
+| card-tools version 0.4                  | System View   | https://github.com/thomasloven/lovelace-card-tools                                  |
+| Config Check                            | System        | https://github.com/custom-components/config_check                                   |
+| Custom Header                           | Throughout    | https://github.com/maykar/custom-header                                             |
+| fold-entity-row                         | Lighting View | https://github.com/thomasloven/lovelace-fold-entity-row                             |
+| FontAwesome                             | Xbox Remote   | https://github.com/thomasloven/hass-fontawesome                                     |
+| HACS (Home Assistant Community Store)   | System        | https://github.com/hacs/integration                                                 |
+| hass-favicon                            | Throughout    | https://github.com/thomasloven/hass-favicon                                         |
+| HTML Jinja2 Template card               | Youtube Card  | https://github.com/PiotrMachowski/Home-Assistant-Lovelace-HTML-Jinja2-Template-card |
+| Hue sensor advanced                     | Lighting      | https://github.com/robmarkcole/Hue-sensors-HASS                                     |
+| layout-card                             | System View   | https://github.com/thomasloven/lovelace-layout-card                                 |
+| Light Entity Card                       | Lighting View | https://github.com/ljmerza/light-entity-card                                        |
+| Media Player Jukebox for Home-Assistant | Weather/Media | https://github.com/lukx/home-assistant-jukebox                                      |
+| Mini Graph card                         | System View   | https://github.com/kalkih/mini-graph-card                                           |
+| Mini Media Player                       | Media View    | https://github.com/kalkih/mini-media-player                                         |
+| Search Card                             | Home View     | https://github.com/postlund/search-card                                             |
+| Upcoming Media                          | Media View    | https://github.com/custom-cards/upcoming-media-card                                 |
+| Vertical Stack In Card                  | Throughout    | https://github.com/custom-cards/vertical-stack-in-card                              |
+| Weatheralerts                           | Weather/Popup | https://github.com/custom-components/weatheralerts                                  |
+| Youtube Sensor                          | Media View    | https://github.com/custom-components/youtube                                        |
 
 | Nonuse Card | Reason  | Link                                            |
 |-------------|---------|-------------------------------------------------|
@@ -102,6 +105,39 @@ Implement
 -	[ ] Auto git backup
 -	[ ] Backgrounds for each theme
 
+Screen Shots
+============
+
+Home View
+---------
+
+![Home View](www/screens/home_screen.png)
+
+Weather View
+------------
+
+![Weather View 1](www/screens/weather_screen_1.png) ![Weather View 2](www/screens/weather_screen_2.png)
+
+Media View
+----------
+
+![Media Screen](www/screens/media_screen.png)
+
+Light View
+----------
+
+![Light Screen](www/screens/light_screen.png)
+
+System View
+-----------
+
+![System View](www/screens/system_screen.png)
+
+Custom Harmony Xbox Remote
+--------------------------
+
+![Xbox Remote View](www/screens/xbox_remote_screen.png)
+
 Fix
 ===
 
@@ -118,5 +154,4 @@ Fixed
 -	[x] Convert cch to Compact Header
 -	[x] Fix light control layout
 -	[x] Tautulli install fix media card
--	[x] Themes
 -	[x] Database Recorder

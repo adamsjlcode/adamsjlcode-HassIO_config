@@ -1,6 +1,9 @@
 ################################################################################
 ########################       Light – Green Theme       #######################
 ################################################################################
+ha-card-border-radius: '7px'                                                     # Radius on card borders
+ha-card-box-shadow: "0px 5px 5px rgba(0,0,0,0.45)"
+
 ### Main Interface Colors ###
 primary-color: "#03B14B"
 light-primary-color: "#47FC92"
@@ -23,11 +26,19 @@ state-icon-color: "#12D289"
 state-icon-active-color: "#FBCD41"
 state-icon-unavailable-color: var(--disabled-text-color)
 ### Sliders ###
-paper-slider-knob-color: "#12D289"
-paper-slider-knob-start-color: var(--paper-slider-knob-color)
-paper-slider-pin-color: var(--paper-slider-knob-color)
-paper-slider-active-color: var(--paper-slider-knob-color)
-paper-slider-secondary-color: var(--light-primary-color)
+# paper-slider-knob-color: "#12D289"
+# paper-slider-knob-start-color: var(--paper-slider-knob-color)
+# paper-slider-pin-color: var(--paper-slider-knob-color)
+# paper-slider-active-color: var(--paper-slider-knob-color)
+# paper-slider-secondary-color: var(--light-primary-color)
+paper-slider-knob-color: 'var(--accent-color)'
+paper-slider-knob-start-color: 'var(--accent-color)'
+paper-slider-pin-color: 'var(--accent-color)'
+paper-slider-active-color: 'var(--accent-color)'
+paper-slider-container-color: 'linear-gradient(var(--primary-background-color), var(--secondary-background-color)) no-repeat'
+paper-slider-secondary-color: 'var(--secondary-background-color)'
+paper-slider-disabled-active-color: 'var(--disabled-text-color)'
+paper-slider-disabled-secondary-color: 'var(--disabled-text-color)'
 ### Labels ###
 label-badge-background-color: "#F8FAF9"
 label-badge-text-color: "#788083"
